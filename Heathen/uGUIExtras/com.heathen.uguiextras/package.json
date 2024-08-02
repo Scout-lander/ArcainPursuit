@@ -1,0 +1,26 @@
+{
+  "name": "com.heathen.uguiextras",
+  "displayName": "UX uGUI Extras",
+  "version": "2.18.0",
+  "unity": "2020.3",
+  "author": {
+    "name": "Heathen Group",
+    "email": "support@heathen.group",
+    "url": "https://heathen.group"
+  },
+  "documentationUrl": "https://kb.heathenengineering.com/assets/ux/learning/ugui-extras",
+  "keywords": [],
+  "description": "Do more with Heathen's uGUI Extras. Includes the KeyCollection an On-Screen Keyboard tool as well as Ligature tools, TreeView and other uGUI extensions and tools.",
+  "license": "LICENSE.md",
+  "samples": 
+	[{
+		"displayName": "On Screen Keyboard",
+		"description": "Demonstrates the features of the KeyCollection control when used as an On Screen Keyboard",
+		"path": "Samples~/Examples/On Screen Keyboard"
+	 },
+	 {
+		"displayName": "Tree View",
+		"description": "Demonstrates the Tree View control which can manage a tree of uGUI transforms (RectTransforms) as a visual tree view control",
+		"path": "Samples~/Examples/Tree View"
+	 }]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "com.heathen.ux",
+  "displayName": "UX Complete",
+  "version": "2.18.1",
+  "unity": "2020.3",
+  "author": {
+    "name": "Heathen Group",
+    "email": "support@heathen.group",
+    "url": "https://heathen.group"
+  },
+  "dependencies": {
+    "com.unity.mathematics": "1.2.5"
+  },
+  "documentationUrl": "https://kb.heathenengineering.com/assets/ux",
+  "keywords": [],
+  "description": "Do more with Heathen's User Experience **UX**. Includes tools for drag and drop, windows, animated cursors, feedback collection, advanced logs and more.",
+  "license": "LICENSE.md",
+  "samples": 
+	[{
+		"displayName": "Example Scenes",
+		"description": "A collection scenes demonstrating the use of UX features",
+		"path": "Samples~/Examples"
+	 }]
+}
