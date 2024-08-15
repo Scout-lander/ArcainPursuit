@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f9ea9c8c2212c946b3c8dbd86b0ccb3, type: 3}
   m_Name: Speed Rune
   m_EditorClassIdentifier: 
+  id: Rune-60908-72978
   icon: {fileID: 21300000, guid: 2dbba0f8f67c8f14cabb0e98507ea885, type: 3}
   iconName: SpeedRune
   gemName: Speed Rune

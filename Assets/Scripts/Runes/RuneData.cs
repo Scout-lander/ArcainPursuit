@@ -6,6 +6,7 @@ public enum RuneRarity { Common, Uncommon, Rare, Epic, Legendary, Mythic }
 [CreateAssetMenu(fileName = "Rune Data", menuName = "Inventory/Rune Data")]
 public class RuneDataNew : ScriptableObject
 {
+    public string id;
     public Sprite icon;
     public string iconName;
     public string gemName;

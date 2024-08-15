@@ -40,7 +40,7 @@ public class CharacterSelector : MonoBehaviour
                     if (weapon != null && weapon.weaponName == weaponName)
                     {
                         weaponData = weapon;
-                        Debug.Log($"Loaded weapon: {weapon.weaponName}");
+                        //Debug.Log($"Loaded weapon: {weapon.weaponName}");
                         return;
                     }
                 }

@@ -2,6 +2,8 @@
   "dependencies": {
     "com.heathen.steamworkscomplete": "file:G:/SourceRepo/Unity/Steamworks/com.heathen.steamworkscomplete",
     "com.heathen.systemcore": "https://github.com/heathen-engineering/SystemCore.git?path=/com.heathen.systemcore",
+    "com.heathen.uguiextras": "file:../Heathen/uGUIExtras/com.heathen.uguiextras",
+    "com.heathen.ux": "file:../Heathen/UX/com.heathen.ux",
     "com.rlabrecque.steamworks.net": "https://github.com/rlabrecque/Steamworks.NET.git?path=/com.rlabrecque.steamworks.net",
     "com.unity.2d.animation": "9.1.1",
     "com.unity.2d.pixel-perfect": "5.0.3",

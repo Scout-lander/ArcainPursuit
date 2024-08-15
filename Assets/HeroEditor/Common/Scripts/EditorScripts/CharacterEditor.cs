@@ -523,7 +523,7 @@ namespace Assets.HeroEditor.Common.Scripts.EditorScripts
                 {
                     var json = System.IO.File.ReadAllText(path);
                     Character.FromJson(json);
-                    Debug.Log($"Loaded character from {path}");
+                    //Debug.Log($"Loaded character from {path}");
                     
                     // Update the UI element with the file path
                     if (FilePathText != null)

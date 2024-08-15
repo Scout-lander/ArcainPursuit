@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36439f6d448ed5248af0c34d4a8a37aa, type: 3}
+  m_Name: 30
+  m_EditorClassIdentifier: 
+  possibleSpawnPrefabs:
+  - {fileID: 6534988251064336318, guid: 2f94fd2357a45b74fbe12d23b9aa2151, type: 3}
+  - {fileID: 5783190142156780217, guid: 3dd062fd9dd15e44bb28fb13517103e3, type: 3}
+  - {fileID: 3823444607504333816, guid: ff5548893e58fa147ba9fcb1f250f027, type: 3}
+  - {fileID: 1567190153320119419, guid: b592bf23def884a42ba10e690c7ccf9b, type: 3}
+  spawnInterval: {x: 2, y: 3}
+  spawnsPerTick: {x: 3, y: 4}
+  duration: 999
+  startingCount: 0
+  totalSpawns: 30
+  exitConditions: 2
+  mustKillAll: 1
+  spawnCount: 0

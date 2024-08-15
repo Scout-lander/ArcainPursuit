@@ -325,7 +325,7 @@ MonoBehaviour:
   enemyAbility: {fileID: 0}
   damageBlockPercentage: 0
   hasShield: 0
-  goldAmount: 10
+  goldAmount: 1
   damageColor: {r: 1, g: 0, b: 0, a: 1}
   damageFlashDuration: 0.2
   deathFadeTime: 0.6

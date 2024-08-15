@@ -245,6 +245,21 @@ public class PlayerStats : MonoBehaviour
             }
         }
 
+        // Apply upgrades from PassiveUpgrades
+    PassiveUpgrades passiveUpgrades = GetComponent<PassiveUpgrades>();
+    if (passiveUpgrades != null)
+    {
+        foreach (var upgrade in passiveUpgrades.purchasedUpgrades)
+        {
+            actualStats += upgrade.statBoost;
+        }
+        
+        foreach (var oneOffItem in passiveUpgrades.purchasedOneOffItems)
+        {
+            actualStats += oneOffItem.statBoost;
+        }
+    }
+
         // Apply gem effects
         ApplyEquippedRuneEffects();
 

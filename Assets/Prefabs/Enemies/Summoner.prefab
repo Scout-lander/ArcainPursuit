@@ -137,6 +137,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8354af90658fa984495e7be309fc3bc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sortingActive: 1
+  minimumDistance: 0.2
   outOfFrameAction: 1
   knockbackVariance: 2
 --- !u!61 &3073836973588752355
@@ -255,8 +257,8 @@ MonoBehaviour:
       freeze: 0
       kill: 0
       debuff: 0
-    curseBoosts: -1
-    levelBoosts: -1
+    curseBoosts: 5
+    levelBoosts: 0
   actualStats:
     maxHealth: 10
     moveSpeed: 1.5
@@ -271,7 +273,7 @@ MonoBehaviour:
   enemyAbility: {fileID: 0}
   damageBlockPercentage: 0
   hasShield: 0
-  goldAmount: 10
+  goldAmount: 2
   damageColor: {r: 1, g: 0, b: 0, a: 1}
   damageFlashDuration: 0.2
   deathFadeTime: 0.6

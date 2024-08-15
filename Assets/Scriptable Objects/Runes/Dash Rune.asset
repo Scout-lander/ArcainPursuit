@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f9ea9c8c2212c946b3c8dbd86b0ccb3, type: 3}
   m_Name: Dash Rune
   m_EditorClassIdentifier: 
+  id: Rune-49421-47122
   icon: {fileID: 21300000, guid: dad853f998390c24991f6fb6ce7c8d78, type: 3}
   iconName: Rune3
   gemName: Dash Rune

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f9ea9c8c2212c946b3c8dbd86b0ccb3, type: 3}
   m_Name: Bleeding heart
   m_EditorClassIdentifier: 
+  id: Rune-68474-90869
   icon: {fileID: 21300000, guid: 9d7738cdecbe7604fbefc24c120d83da, type: 3}
   iconName: BleedingHeart
   gemName: Bleeding heart

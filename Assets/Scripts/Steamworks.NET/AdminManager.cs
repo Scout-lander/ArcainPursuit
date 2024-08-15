@@ -23,7 +23,7 @@ public class AdminManager : MonoBehaviour
             {
                 DebugConsole.instance.ClearLog();
             }
-            Debug.Log("Admin access granted");
+//            Debug.Log("Admin access granted");
         }
         else
         {

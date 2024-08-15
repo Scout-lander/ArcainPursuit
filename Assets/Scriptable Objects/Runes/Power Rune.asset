@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f9ea9c8c2212c946b3c8dbd86b0ccb3, type: 3}
   m_Name: Power Rune
   m_EditorClassIdentifier: 
+  id: Rune-45275-49976
   icon: {fileID: 21300000, guid: 92501eed19b51cc42b6d6ff94072a404, type: 3}
   iconName: PowerRune
   gemName: Power Rune

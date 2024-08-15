@@ -283,7 +283,7 @@ namespace HeathenEngineering.UX.API
                 }
             }
 
-            tex.Resize(newWidth, newHeight);
+            tex.Reinitialize(newWidth, newHeight);
             tex.SetPixels32(newColors);
             tex.Apply();
 

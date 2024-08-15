@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f9ea9c8c2212c946b3c8dbd86b0ccb3, type: 3}
   m_Name: Luck Rune
   m_EditorClassIdentifier: 
+  id: Rune-29643-60638
   icon: {fileID: 21300000, guid: debafee0d69b5064cac99471c9081b78, type: 3}
   iconName: Rune5
   gemName: Luck Rune

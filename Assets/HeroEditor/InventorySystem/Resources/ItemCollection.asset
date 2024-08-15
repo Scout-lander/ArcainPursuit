@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpriteCollections:
   - {fileID: 11400000, guid: 620e7b0c742440a4be6c065493edd0eb, type: 2}
-  IconCollections:
-  - {fileID: 11400000, guid: 0b1224523bda42afbf2646ba665a77b3, type: 2}
+  IconCollections: []
   Items:
   - Id: Gold
     Level: 0
@@ -118,6 +117,21 @@ MonoBehaviour:
     Weight: 1
     IconId: FantasyHeroes.Basic.Supplies.MagicGoldenRing
     SpriteId: FantasyHeroes.Basic.Supplies.MagicGoldenRing
+    Meta: 
+    Localization: []
+  - Id: LargePotion
+    Level: 0
+    Rarity: 0
+    Type: 4
+    Class: 13
+    Tags: 
+    Properties:
+    - Id: 21
+      Value: 50
+    Price: 10
+    Weight: 5
+    IconId: FantasyHeroes.Basic.Supplies.LargePotion
+    SpriteId: FantasyHeroes.Basic.Supplies.LargePotion
     Meta: 
     Localization: []
   - Id: LargePotion

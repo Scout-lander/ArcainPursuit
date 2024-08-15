@@ -174,8 +174,17 @@ public class EnemyStats : MonoBehaviour
     public void Kill()
     {
         GetComponent<SplittingEnemy>()?.OnKill();
-        enemyAbility?.SpawnIceSpike();
-        enemyAbility?.CreatePoisonCloud();
+        //enemyAbility?.SpawnIceSpike();
+        //enemyAbility?.CreatePoisonCloud();
+
+        if(enemyAbility.hasBurningAbility)
+            {
+                enemyAbility?.SpawnIceSpike();
+            } 
+        if(enemyAbility.hasPoisonAbility)
+            {
+                enemyAbility?.CreatePoisonCloud();
+            } 
 
         StartCoroutine(KillFade());
         GameManager.instance.IncrementGold(goldAmount);

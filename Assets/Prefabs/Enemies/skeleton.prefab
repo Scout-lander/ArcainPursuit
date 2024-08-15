@@ -137,6 +137,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8354af90658fa984495e7be309fc3bc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sortingActive: 1
+  minimumDistance: 0.2
   outOfFrameAction: 1
   knockbackVariance: 2
 --- !u!114 &6166088086864913589
@@ -216,7 +218,7 @@ MonoBehaviour:
   flashColor: {r: 0.990566, g: 0.990566, b: 0.990566, a: 1}
   explodingEffect: {fileID: 198572881580852744, guid: ac251dc0858309743aae14eb6bc69ceb, type: 3}
   baseStats:
-    movementSpeedIncrease: 3
+    movementSpeedIncrease: 4.5
     flashDuration: 0.2
     explosionDuration: 4
     explosionRadius: 3
@@ -250,8 +252,8 @@ MonoBehaviour:
       freeze: 0
       kill: 0
       debuff: 0.0022416408
-    curseBoosts: -1
-    levelBoosts: -1
+    curseBoosts: 5
+    levelBoosts: 0
   actualStats:
     maxHealth: 10
     moveSpeed: 1.5
@@ -266,7 +268,7 @@ MonoBehaviour:
   enemyAbility: {fileID: 0}
   damageBlockPercentage: 0
   hasShield: 0
-  goldAmount: 10
+  goldAmount: 0
   damageColor: {r: 1, g: 0, b: 0, a: 1}
   damageFlashDuration: 0.2
   deathFadeTime: 0.6

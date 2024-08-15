@@ -7,11 +7,16 @@ public class HurtUI : MonoBehaviour
 {
     public Image targetImage; // The Image component to change color
     public Color hurtColor = Color.red; // The color to change to when hurt
-    public float hurtDuration = 0.5f; // Duration to keep the hurt color
-    public float expressionDuration = 1f;
+    public float hurtDuration = 1f; // Duration to keep the hurt color
+    public float expressionDuration = 1.5f;
 
     private Color originalColor;
     public Character character;
+
+    private Coroutine expressionCoroutine;
+    private Coroutine colorCoroutine;
+    private float lastDamageTimeColor;
+    private float lastDamageTimeExpression;
 
     private void Start()
     {
@@ -23,24 +28,43 @@ public class HurtUI : MonoBehaviour
 
     public void FlashHurtColor()
     {
-        if (targetImage != null)
+        lastDamageTimeColor = Time.time;
+        lastDamageTimeExpression = Time.time;
+
+        if (colorCoroutine == null)
         {
-            StartCoroutine(ChangeColor());
-            StartCoroutine(Expression());
+            colorCoroutine = StartCoroutine(ChangeColor());
+        }
+
+        if (expressionCoroutine == null)
+        {
+            expressionCoroutine = StartCoroutine(Expression());
         }
     }
 
     private IEnumerator ChangeColor()
     {
         targetImage.color = hurtColor;
-        yield return new WaitForSeconds(hurtDuration);
+
+        while (Time.time - lastDamageTimeColor < hurtDuration)
+        {
+            yield return null;
+        }
+
         targetImage.color = originalColor;
+        colorCoroutine = null;
     }
-    
+
     private IEnumerator Expression()
     {
         character.SetExpression("Angry");
-        yield return new WaitForSeconds(expressionDuration);
+
+        while (Time.time - lastDamageTimeExpression < expressionDuration)
+        {
+            yield return null;
+        }
+
         character.SetExpression("Default");
+        expressionCoroutine = null;
     }
 }

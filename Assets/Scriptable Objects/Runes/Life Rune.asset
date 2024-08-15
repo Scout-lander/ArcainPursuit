@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f9ea9c8c2212c946b3c8dbd86b0ccb3, type: 3}
   m_Name: Life Rune
   m_EditorClassIdentifier: 
+  id: Rune-70072-23273
   icon: {fileID: 21300000, guid: b59ac5c14cb9e6e44ac24fa401db6ace, type: 3}
   iconName: Rune4
   gemName: Life Rune
