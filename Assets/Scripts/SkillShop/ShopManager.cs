@@ -8,13 +8,18 @@ public class ShopManager : MonoBehaviour
 {
     public UpgradeData[] upgrades;
     public OneOffItemData[] oneOffItems; // Array of one-off items
-    public Transform shopContent;
+    public Transform upgradesContent; // Container for upgrades
+    public Transform oneOffItemsContent; // Container for one-off items
     public GameObject upgradeButtonPrefab; // Use the same prefab for both upgrades and one-off items
     public PlayerStats playerStats;
     public TMP_Text goldText; // For shop UI
     public TMP_Text nonShopGoldText; // For non-shop UI
     public PassiveUpgrades passiveUpgrades;
     public GameObject shopUI;
+
+    [Header("Tab Buttons")]
+    public Button upgradesTabButton; // Button to switch to upgrades
+    public Button oneOffItemsTabButton; // Button to switch to one-off items
     public Button removeAllButton; // Reference to the remove all button
 
     [Header("Cannot Buy")]
@@ -35,6 +40,13 @@ public class ShopManager : MonoBehaviour
         ToggleShop(false); // Ensure the shop starts closed
         removeAllButton.onClick.AddListener(RemoveAllBoughtItems); // Add listener to the remove all button
         PlayerGold.instance.onGoldChanged += UpdateGoldUI; // Subscribe to the gold change event
+
+         // Add listeners to the tab buttons
+        upgradesTabButton.onClick.AddListener(() => SwitchTab(true));
+        oneOffItemsTabButton.onClick.AddListener(() => SwitchTab(false));
+
+        // Start with the upgrades tab open
+        SwitchTab(true);
     }
 
     private void OnDestroy()
@@ -53,7 +65,11 @@ public class ShopManager : MonoBehaviour
     private void InitializeShop()
     {
         // Clear existing buttons first
-        foreach (Transform child in shopContent)
+        foreach (Transform child in upgradesContent)
+        {
+            Destroy(child.gameObject);
+        }
+        foreach (Transform child in oneOffItemsContent)
         {
             Destroy(child.gameObject);
         }
@@ -73,7 +89,7 @@ public class ShopManager : MonoBehaviour
 
     private void CreateUpgradeButton(UpgradeData upgrade)
     {
-        GameObject button = Instantiate(upgradeButtonPrefab, shopContent);
+        GameObject button = Instantiate(upgradeButtonPrefab, upgradesContent);
 
         button.transform.Find("Icon").GetComponent<Image>().sprite = upgrade.icon;
         button.transform.Find("Name").GetComponent<TMP_Text>().text = upgrade.upgradeName;
@@ -89,30 +105,54 @@ public class ShopManager : MonoBehaviour
         }
         else
         {
+           // Set the UI elements for a maxed-out upgrade
             button.transform.Find("Cost").GetComponent<TMP_Text>().text = "";
             button.transform.Find("Level").GetComponent<TMP_Text>().text = "Maxed Level";
             button.transform.Find("Description").GetComponent<TMP_Text>().text = "";
-            button.transform.Find("PurchaseButton").GetComponent<Button>().interactable = false;
+
+            // Disable the purchase button
+            Button purchaseButton = button.transform.Find("PurchaseButton").GetComponent<Button>();
+            purchaseButton.interactable = false;
+
+            // Change the button and text color to grey to indicate that the upgrade is maxed out
+            Color greyColor = Color.grey;
+            button.GetComponent<Image>().color = greyColor; // Change the button background to grey
+            button.transform.Find("Icon").GetComponent<Image>().color = greyColor; // Change the icon color to grey
+            button.transform.Find("Name").GetComponent<TMP_Text>().color = greyColor; // Change the name text color to grey
+            button.transform.Find("Level").GetComponent<TMP_Text>().color = greyColor; // Change the level text color to grey
+
             Debug.Log($"{upgrade.upgradeName} is maxed out");
         }
     }
 
     private void CreateOneOffItemButton(OneOffItemData item)
     {
-        GameObject button = Instantiate(upgradeButtonPrefab, shopContent);
+        GameObject button = Instantiate(upgradeButtonPrefab, oneOffItemsContent);
 
+        // Set the icon, name, cost, and description
         button.transform.Find("Icon").GetComponent<Image>().sprite = item.icon;
         button.transform.Find("Name").GetComponent<TMP_Text>().text = item.itemName;
         button.transform.Find("Cost").GetComponent<TMP_Text>().text = item.cost.ToString();
         button.transform.Find("Description").GetComponent<TMP_Text>().text = item.description;
         button.transform.Find("Level").GetComponent<TMP_Text>().text = ""; // No level for one-off items
+
         Button purchaseButton = button.transform.Find("PurchaseButton").GetComponent<Button>();
         purchaseButton.onClick.AddListener(() => PurchaseOneOffItem(item, button));
 
+        // Check if the item has already been purchased or owned
         if (passiveUpgrades.HasOneOffItem(item.itemName))
         {
+            // Grey out the icon
             button.transform.Find("Icon").GetComponent<Image>().color = Color.grey;
+            
+            // Disable the purchase button
             purchaseButton.interactable = false;
+
+            // Grey out the button and text to indicate the item is already owned
+            button.GetComponent<Image>().color = Color.grey; // Grey out the button background
+            button.transform.Find("Name").GetComponent<TMP_Text>().color = Color.grey; // Grey out the name text
+            button.transform.Find("Cost").GetComponent<TMP_Text>().text = "Owned"; // Grey out the cost text
+            button.transform.Find("Description").GetComponent<TMP_Text>().color = Color.grey; // Grey out the description text
         }
     }
 
@@ -199,19 +239,42 @@ public class ShopManager : MonoBehaviour
         //Debug.Log($"Updated gold: {newGoldAmount}");
     }
 
-    private void ToggleShop(bool isOpen)
+    public void ToggleShop(bool open)
     {
-        isShopOpen = isOpen;
-        shopUI.SetActive(isOpen);
-        nonShopGoldText.gameObject.SetActive(!isOpen); // Toggle visibility of the non-shop UI gold text
-        //Debug.Log($"Shop is now {(isOpen ? "open" : "closed")}");
+        isShopOpen = open;
+        shopUI.SetActive(isShopOpen);
+        if (!isShopOpen)
+        {
+            InitializeShop();
+        }
+    }
+
+    private void SwitchTab(bool showUpgrades)
+    {
+        // Toggle the content visibility
+        upgradesContent.gameObject.SetActive(showUpgrades);
+        oneOffItemsContent.gameObject.SetActive(!showUpgrades);
+
+        // Update button colors based on the active content
+        if (showUpgrades)
+        {
+            // Show the upgrades tab, set the upgrades button to normal and others to gray
+            upgradesTabButton.image.color = Color.white;
+            oneOffItemsTabButton.image.color = Color.grey;
+        }
+        else
+        {
+            // Show the one-off items tab, set the one-off items button to normal and others to gray
+            upgradesTabButton.image.color = Color.grey;
+            oneOffItemsTabButton.image.color = Color.white;
+        }
     }
 
     private void RemoveAllBoughtItems()
     {
         Debug.Log("Removing all bought items");
         // Clear the shop buttons first
-        foreach (Transform child in shopContent)
+        foreach (Transform child in upgradesContent)
         {
             Destroy(child.gameObject);
         }

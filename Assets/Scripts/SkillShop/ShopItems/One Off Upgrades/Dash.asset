@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 429e3c1fbc31c3c4cbd5d80cd6b6bc75, type: 3}
-  m_Name: OneOffItemData
+  m_Name: Dash
   m_EditorClassIdentifier: 
-  itemName: This is a Test single use upgrade
+  itemName: Dash
   statBoost:
-    maxHealth: 100
-    recovery: 100
+    maxHealth: 0
+    recovery: 0
     armor: 0
     moveSpeed: 0
     might: 0
@@ -32,11 +32,11 @@ MonoBehaviour:
     revival: 0
     dashDuration: 0
     dashCooldown: 0
-    maxDashes: 5
+    maxDashes: 2
     StunReduction: 0
     BurnReduction: 0
     SlowReduction: 0
     heartRune: 0
-  cost: 25
-  description: 
+  cost: 200
+  description: Gain 2 Extra Dash For 1 Raid
   icon: {fileID: 21300000, guid: 83fdaf3e5c2143b1b1138eb398520baf, type: 3}

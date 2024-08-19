@@ -366,7 +366,7 @@ MonoBehaviour:
       freeze: 0
       kill: 0
       debuff: 0
-    curseBoosts: 29
+    curseBoosts: 28
     levelBoosts: 0
   actualStats:
     maxHealth: 40

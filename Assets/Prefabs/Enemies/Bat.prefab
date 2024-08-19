@@ -291,7 +291,7 @@ MonoBehaviour:
       kill: 0
       debuff: 0
     curseBoosts: 0
-    levelBoosts: 0
+    levelBoosts: 4
   enemyAbility: {fileID: 0}
   damageBlockPercentage: 0
   hasShield: 0
