@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum RuneRarity { Common, Uncommon, Rare, Epic, Legendary, Mythic }
-[CreateAssetMenu(fileName = "Rune Data", menuName = "Inventory/Rune Data")]
+[CreateAssetMenu(fileName = "New Rune", menuName = "Inventory/Runes")]
 public class RuneDataNew : ScriptableObject
 {
     public string id;

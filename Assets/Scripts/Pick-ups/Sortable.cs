@@ -7,31 +7,26 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public abstract class Sortable : MonoBehaviour
 {
-    private SpriteRenderer sorted;
+
+    SpriteRenderer sorted;
     public bool sortingActive = true; // Allows us to deactivate this on certain objects.
     public float minimumDistance = 0.2f; // Minimum distance before the sorting value updates.
-    private int lastSortOrder = 0;
+    int lastSortOrder = 0;
+
+    static float activeMinimumDistance;
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
         sorted = GetComponent<SpriteRenderer>();
-        if (sorted == null)
-        {
-            Debug.LogError("SpriteRenderer component not found on this GameObject.");
-        }
+        activeMinimumDistance = Mathf.Min(minimumDistance, activeMinimumDistance);
     }
 
     // Update is called once per frame
     protected virtual void LateUpdate()
     {
-        if (sorted == null) return;
-
-        int newSortOrder = (int)(-transform.position.y / minimumDistance);
-        if (lastSortOrder != newSortOrder)
-        {
-            sorted.sortingOrder = newSortOrder;
-            lastSortOrder = newSortOrder;
-        }
+        if (!sorted) return;
+        int newSortOrder = (int)(-transform.position.y / Mathf.Max(0.000001f, activeMinimumDistance));
+        if (lastSortOrder != newSortOrder) sorted.sortingOrder = newSortOrder;
     }
 }

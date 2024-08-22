@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 1281309217516037336}
   - component: {fileID: 5719147696024251480}
   - component: {fileID: 8352527260723866207}
+  - component: {fileID: -6863793773028266594}
   m_Layer: 7
   m_Name: skeleton
   m_TagString: Enemy
@@ -215,17 +216,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0984309b3ba414307a7f8a63ac5427d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flashColor: {r: 0.990566, g: 0.990566, b: 0.990566, a: 1}
+  flashColor: {r: 1, g: 0, b: 0, a: 1}
   explodingEffect: {fileID: 198572881580852744, guid: ac251dc0858309743aae14eb6bc69ceb, type: 3}
   baseStats:
-    movementSpeedIncrease: 4.5
+    movementSpeedIncrease: 3.5
     flashDuration: 0.2
     explosionDuration: 4
-    explosionRadius: 3
+    explosionRadius: 2
     explosionStartDistance: 7
     explosionDamage: 10
   actualStats:
-    movementSpeedIncrease: 3
+    movementSpeedIncrease: 2.5
     flashDuration: 0.2
     explosionDuration: 4
     explosionRadius: 0
@@ -256,7 +257,7 @@ MonoBehaviour:
     levelBoosts: 0
   actualStats:
     maxHealth: 10
-    moveSpeed: 1.5
+    moveSpeed: 6.96
     damage: 3
     knockbackMultiplier: 1
     resistances:
@@ -272,6 +273,73 @@ MonoBehaviour:
   damageColor: {r: 1, g: 0, b: 0, a: 1}
   damageFlashDuration: 0.2
   deathFadeTime: 0.6
+--- !u!114 &-6863793773028266594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3823444607504333816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd05d3c4b4b6cd2468c9bfee78f2f797, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boostedByCurse: 1
+  generalAbilityChance: 0
+  lightningAbilityChance: 0
+  burningAbilityChance: 0
+  iceAbilityChance: 0
+  poisonAbilityChance: 0
+  poisonCloudChance: 0
+  voxAbilityChance: 0
+  shieldAbilityChance: 0
+  lightningMaterial: {fileID: 0}
+  burningMaterial: {fileID: 0}
+  iceMaterial: {fileID: 0}
+  poisonMaterial: {fileID: 0}
+  shieldMaterial: {fileID: 0}
+  maxAbilities: 1
+  hasLightningAbility: 0
+  lightningEffectPrefab: {fileID: 0}
+  lightningProjectilePrefab: {fileID: 0}
+  projectileLightningSpeed: 5
+  projectileDuration: 4
+  numLightningProjectiles: 3
+  lightningCooldown: 2
+  hasBurningAbility: 0
+  fireEffectPrefab: {fileID: 0}
+  burnDuration: 5
+  burnDamagePerSecond: 1
+  hasIceAbility: 0
+  iceEffectPrefab: {fileID: 0}
+  iceTrailPrefab: {fileID: 0}
+  iceSpikePrefab: {fileID: 0}
+  iceTrailInterval: 0.5
+  iceSlowDuration: 1
+  iceSlowPercentage: 0.25
+  iceSpikeDuration: 2
+  iceSpikeDamage: 10
+  hasPoisonAbility: 0
+  poisonEffectPrefab: {fileID: 0}
+  poisonDuration: 3
+  poisonDamagePerTick: 2
+  leavesPoisonCloud: 0
+  poisonCloudPrefab: {fileID: 0}
+  poisonCloudDuration: 5
+  poisonCloudDamagePerTick: 1.5
+  hasVoxAbility: 0
+  voxPrefab: {fileID: 0}
+  voxEffectRadius: 3
+  pullForce: 5
+  slowFactor: 0.5
+  effectDuration: 5
+  voxCooldown: 10
+  hasShieldAbility: 0
+  shieldPrefab: {fileID: 0}
+  shieldDuration: 5
+  shieldCooldown: 10
+  damageBlockPercentage: 50
 --- !u!1 &5355443369473314441
 GameObject:
   m_ObjectHideFlags: 0

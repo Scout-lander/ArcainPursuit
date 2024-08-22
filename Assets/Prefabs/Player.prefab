@@ -27026,6 +27026,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c04e6a376dc2f3f4a888219f2daa92b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sortingActive: 1
+  minimumDistance: 0.2
   stunParticles: {fileID: 0}
   coolDowns: {fileID: 0}
   tr: {fileID: 0}
@@ -27118,7 +27120,6 @@ MonoBehaviour:
     StunReduction: 1
     BurnReduction: 1
     SlowReduction: 1
-    heartRune: 0
   actualStats:
     maxHealth: 0
     recovery: 0
@@ -27142,7 +27143,6 @@ MonoBehaviour:
     StunReduction: 0
     BurnReduction: 0
     SlowReduction: 0
-    heartRune: 0
   damageEffect: {fileID: 19800000, guid: c6b4eea72d61b034094937ed185e48d4, type: 3}
   blockedEffect: {fileID: 6415545557987951955, guid: 3ca9be94e77455144a0282a314eaff6a, type: 3}
   fireEffect: {fileID: 5381768852406240756, guid: d2725825d79809c44bb377a6bace2c54, type: 3}

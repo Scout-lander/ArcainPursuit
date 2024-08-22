@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PropRandomizer : MonoBehaviour
+public class PropRandomizer : Sortable
 {
     public List<GameObject> propSpawnPoints;
     public List<GameObject> propPrefabs;
 
 
-    void Start()
+    protected override void Start()
     {
         SpawnProps();
     }

@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 2799724857867647035}
   - component: {fileID: 1717255249464545241}
   - component: {fileID: 3435257868763181474}
+  - component: {fileID: -5029947876469229471}
   m_Layer: 7
   m_Name: Summoner
   m_TagString: Enemy
@@ -277,6 +278,73 @@ MonoBehaviour:
   damageColor: {r: 1, g: 0, b: 0, a: 1}
   damageFlashDuration: 0.2
   deathFadeTime: 0.6
+--- !u!114 &-5029947876469229471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1567190153320119419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd05d3c4b4b6cd2468c9bfee78f2f797, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boostedByCurse: 1
+  generalAbilityChance: 0
+  lightningAbilityChance: 0
+  burningAbilityChance: 0
+  iceAbilityChance: 0
+  poisonAbilityChance: 0
+  poisonCloudChance: 0
+  voxAbilityChance: 0
+  shieldAbilityChance: 0
+  lightningMaterial: {fileID: 0}
+  burningMaterial: {fileID: 0}
+  iceMaterial: {fileID: 0}
+  poisonMaterial: {fileID: 0}
+  shieldMaterial: {fileID: 0}
+  maxAbilities: 1
+  hasLightningAbility: 0
+  lightningEffectPrefab: {fileID: 0}
+  lightningProjectilePrefab: {fileID: 0}
+  projectileLightningSpeed: 5
+  projectileDuration: 4
+  numLightningProjectiles: 3
+  lightningCooldown: 2
+  hasBurningAbility: 0
+  fireEffectPrefab: {fileID: 0}
+  burnDuration: 5
+  burnDamagePerSecond: 1
+  hasIceAbility: 0
+  iceEffectPrefab: {fileID: 0}
+  iceTrailPrefab: {fileID: 0}
+  iceSpikePrefab: {fileID: 0}
+  iceTrailInterval: 0.5
+  iceSlowDuration: 1
+  iceSlowPercentage: 0.25
+  iceSpikeDuration: 2
+  iceSpikeDamage: 10
+  hasPoisonAbility: 0
+  poisonEffectPrefab: {fileID: 0}
+  poisonDuration: 3
+  poisonDamagePerTick: 2
+  leavesPoisonCloud: 0
+  poisonCloudPrefab: {fileID: 0}
+  poisonCloudDuration: 5
+  poisonCloudDamagePerTick: 1.5
+  hasVoxAbility: 0
+  voxPrefab: {fileID: 0}
+  voxEffectRadius: 3
+  pullForce: 5
+  slowFactor: 0.5
+  effectDuration: 5
+  voxCooldown: 10
+  hasShieldAbility: 0
+  shieldPrefab: {fileID: 0}
+  shieldDuration: 5
+  shieldCooldown: 10
+  damageBlockPercentage: 50
 --- !u!1 &3553241470260793684
 GameObject:
   m_ObjectHideFlags: 0

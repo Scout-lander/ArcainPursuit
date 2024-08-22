@@ -22,6 +22,8 @@ public class EnemyMovement : Sortable
 
     protected override void Start()
     {
+        base.Start();
+        
         rb = GetComponent<Rigidbody2D>();
         stats = GetComponent<EnemyStats>();
         spawnedOutOfFrame = !SpawnManager.IsWithinBoundaries(transform);

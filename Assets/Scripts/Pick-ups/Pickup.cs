@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Pickup : MonoBehaviour
+public class Pickup : Sortable
 {
     public float lifespan = 0.5f;
     protected PlayerStats target;
@@ -26,8 +26,10 @@ public class Pickup : MonoBehaviour
     public PickupType pickupType;  // Added pickup type
     public RuneDataNew runeDataNew; // Reference to the RuneDataNew scriptable object
 
-    protected virtual void Start()
+    protected override void Start()
     {
+        base.Start();
+        
         initialPosition = transform.position;
         initialOffset = Random.Range(0, bobbingAnimation.frequency);
         PickupManager.Instance.AddPickup(pickupType);  // Increment pickup count

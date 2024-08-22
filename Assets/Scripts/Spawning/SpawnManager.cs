@@ -1,17 +1,19 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class SpawnManager : MonoBehaviour
 {
-    
-    [SerializeField] int currentWaveIndex; //The index of the current wave [Remember, a list starts from 0]
-    [SerializeField] int currentWaveSpawnCount = 0; // Tracks how many enemies current wave has spawned.
+
+    int currentWaveIndex; //The index of the current wave [Remember, a list starts from 0]
+    int currentWaveSpawnCount = 0; // Tracks how many enemies current wave has spawned.
+    List<GameObject> existingSpawns = new List<GameObject>();
 
     public WaveData[] data;
     public Camera referenceCamera;
 
     [Tooltip("If there are more than this number of enemies, stop spawning any more. For performance.")]
     public int maximumEnemyCount = 300;
-    float spawnTimer; // Timer used to determine when to spawn the next enemy.
+    float spawnTimer; // Timer used to determine when to spawn the next group of enemy.
     float currentWaveDuration = 0f;
     public bool boostedByCurse = true;
 
@@ -19,7 +21,7 @@ public class SpawnManager : MonoBehaviour
 
     void Start()
     {
-        if(instance) Debug.LogWarning("There is more than 1 Spawn Manager in the Scene! Please remove the extras.");
+        if (instance) Debug.LogWarning("There is more than 1 Spawn Manager in the Scene! Please remove the extras.");
         instance = this;
     }
 
@@ -29,9 +31,10 @@ public class SpawnManager : MonoBehaviour
         spawnTimer -= Time.deltaTime;
         currentWaveDuration += Time.deltaTime;
 
-        if(spawnTimer <= 0) {
+        if (spawnTimer <= 0)
+        {
             // Check if we are ready to move on to the new wave.
-            if(HasWaveEnded())
+            if (HasWaveEnded())
             {
                 currentWaveIndex++;
                 currentWaveDuration = currentWaveSpawnCount = 0;
@@ -47,10 +50,8 @@ public class SpawnManager : MonoBehaviour
             }
 
             // Do not spawn enemies if we do not meet the conditions to do so.
-            // Do not spawn enemies if we do not meet the conditions to do so.
             if (!CanSpawn())
             {
-                spawnTimer += data[currentWaveIndex].GetSpawnInterval();
                 ActivateCooldown();
                 return;
             }
@@ -59,16 +60,16 @@ public class SpawnManager : MonoBehaviour
             GameObject[] spawns = data[currentWaveIndex].GetSpawns(EnemyStats.count);
 
             // Loop through and spawn all the prefabs.
-            foreach(GameObject prefab in spawns)
+            foreach (GameObject prefab in spawns)
             {
                 // Stop spawning enemies if we exceed the limit.
                 if (!CanSpawn()) continue;
 
                 // Spawn the enemy.
-                Instantiate(prefab, GeneratePosition(), Quaternion.identity);
+                existingSpawns.Add( Instantiate(prefab, GeneratePosition(), Quaternion.identity) );
                 currentWaveSpawnCount++;
             }
-            
+
             ActivateCooldown();
         }
     }
@@ -83,8 +84,14 @@ public class SpawnManager : MonoBehaviour
     // Do we meet the conditions to be able to continue spawning?
     public bool CanSpawn()
     {
+        // Don't spawn anymore if we exceed the max limit.
         if (HasExceededMaxEnemies()) return false;
+
+        // Don't spawn if we exceeded the max spawns for the wave.
         if (instance.currentWaveSpawnCount > instance.data[instance.currentWaveIndex].totalSpawns) return false;
+
+        // Don't spawn if we exceeded the wave's duration.
+        if (instance.currentWaveDuration > instance.data[instance.currentWaveIndex].duration) return false;
         return true;
     }
 
@@ -92,7 +99,7 @@ public class SpawnManager : MonoBehaviour
     public static bool HasExceededMaxEnemies()
     {
         if (!instance) return false; // If there is no spawn manager, don't limit max enemies.
-        if(EnemyStats.count > instance.maximumEnemyCount) return true;
+        if (EnemyStats.count > instance.maximumEnemyCount) return true;
         return false;
     }
 
@@ -111,7 +118,8 @@ public class SpawnManager : MonoBehaviour
             if (currentWaveSpawnCount < currentWave.totalSpawns) return false;
 
         // Otherwise, if kill all is checked, we have to make sure there are no more enemies first.
-        if (currentWave.mustKillAll && EnemyStats.count > 0)
+        existingSpawns.RemoveAll(item => item == null);
+        if (currentWave.mustKillAll && existingSpawns.Count > 0)
             return false;
 
         return true;
@@ -126,21 +134,23 @@ public class SpawnManager : MonoBehaviour
     public static Vector3 GeneratePosition()
     {
         // If there is no reference camera, then get one.
-        if(!instance.referenceCamera) instance.referenceCamera = Camera.main;
+        if (!instance.referenceCamera) instance.referenceCamera = Camera.main;
 
         // Give a warning if the camera is not orthographic.
-        if(!instance.referenceCamera.orthographic)
+        if (!instance.referenceCamera.orthographic)
             Debug.LogWarning("The reference camera is not orthographic! This will cause enemy spawns to sometimes appear within camera boundaries!");
 
         // Generate a position outside of camera boundaries using 2 random numbers.
         float x = Random.Range(0f, 1f), y = Random.Range(0f, 1f);
 
         // Then, randomly choose whether we want to round the x or the y value.
-        switch(Random.Range(0, 2)) {
-            case 0: default:
-                return instance.referenceCamera.ViewportToWorldPoint( new Vector3(Mathf.Round(x), y) );
+        switch (Random.Range(0, 2))
+        {
+            case 0:
+            default:
+                return instance.referenceCamera.ViewportToWorldPoint(new Vector3(Mathf.Round(x), y));
             case 1:
-                return instance.referenceCamera.ViewportToWorldPoint( new Vector3(x, Mathf.Round(y)) );
+                return instance.referenceCamera.ViewportToWorldPoint(new Vector3(x, Mathf.Round(y)));
         }
     }
 

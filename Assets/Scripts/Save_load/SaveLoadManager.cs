@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Linq;
+
 
 public class SaveLoadManager : MonoBehaviour
 {
@@ -9,28 +11,28 @@ public class SaveLoadManager : MonoBehaviour
     private string equippedWeaponSavePath;
     private string toggleStateSavePath;
     private string passiveUpgradesSavePath;
+    private string potionBagSavePath;
+    private string equippedPotionSavePath;
 
     private const string UpgradesKey = "Upgrades";
     private const string OneOffItemsKey = "OneOffItems";
 
     private void Awake()
     {
-        // Combine the paths to ensure they are within the Save folder
         string saveFolderPath = Path.Combine(Application.persistentDataPath, "Save");
 
-        // Ensure the Save directory exists
         if (!Directory.Exists(saveFolderPath))
         {
             Directory.CreateDirectory(saveFolderPath);
         }
 
-        // Set the paths for the save files within the Save folder
         runeBagsSavePath = Path.Combine(saveFolderPath, "runeBags.json");
         equippedWeaponSavePath = Path.Combine(saveFolderPath, "equippedWeapon.json");
         toggleStateSavePath = Path.Combine(saveFolderPath, "toggleState.json");
         passiveUpgradesSavePath = Path.Combine(saveFolderPath, "passiveUpgrades.json");
+        potionBagSavePath = Path.Combine(saveFolderPath, "potionBag.json");
+        equippedPotionSavePath = Path.Combine(saveFolderPath, "equippedPotion.json");
 
-        // Register the scene loaded and unloaded events
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.sceneUnloaded += OnSceneUnloaded;
     }
@@ -50,36 +52,41 @@ public class SaveLoadManager : MonoBehaviour
         };
 
         string json = JsonUtility.ToJson(data, true);
-        File.WriteAllText(runeBagsSavePath, json);
-        //Debug.Log("Rune bags saved to " + runeBagsSavePath);
+        string encryptedJson = EncryptionUtility.Encrypt(json);
+        File.WriteAllText(runeBagsSavePath, encryptedJson);
     }
 
-    public void SaveUpgrades(List<PassiveUpgrades.Upgrade> upgrades, List<PassiveUpgrades.OneOffItem> oneOffItems, bool gameSceneLoaded)
+   public void SaveUpgrades(List<PassiveUpgrades.Upgrade> upgrades, List<PassiveUpgrades.OneOffItem> oneOffItems, bool gameSceneLoaded)
     {
         PassiveUpgradesData data = new PassiveUpgradesData
         {
             upgrades = upgrades,
             oneOffItems = oneOffItems,
-            gameSceneLoaded = gameSceneLoaded // Save the value
+            gameSceneLoaded = gameSceneLoaded
         };
 
         string json = JsonUtility.ToJson(data, true);
-        File.WriteAllText(passiveUpgradesSavePath, json);
-        //Debug.Log("Passive upgrades saved to " + passiveUpgradesSavePath);
+        string encryptedJson = EncryptionUtility.Encrypt(json);
+        
+        // Save the encrypted JSON to the file
+        File.WriteAllText(passiveUpgradesSavePath, encryptedJson);
     }
 
     public (List<PassiveUpgrades.Upgrade>, List<PassiveUpgrades.OneOffItem>, bool) LoadUpgrades()
     {
         if (File.Exists(passiveUpgradesSavePath))
         {
-            string json = File.ReadAllText(passiveUpgradesSavePath);
+            string encryptedJson = File.ReadAllText(passiveUpgradesSavePath);
+            
+            // Decrypt the JSON
+            string json = EncryptionUtility.Decrypt(encryptedJson);
+            
             PassiveUpgradesData data = JsonUtility.FromJson<PassiveUpgradesData>(json);
-            //Debug.Log("Passive upgrades loaded from " + passiveUpgradesSavePath);
-            return (data.upgrades, data.oneOffItems, data.gameSceneLoaded); // Return the value
+            return (data.upgrades, data.oneOffItems, data.gameSceneLoaded);
         }
         else
         {
-            Debug.LogWarning("Passive upgrades save file not found at " + passiveUpgradesSavePath);
+            Debug.LogWarning("Passive upgrades save file not found.");
             return (new List<PassiveUpgrades.Upgrade>(), new List<PassiveUpgrades.OneOffItem>(), false);
         }
     }
@@ -88,12 +95,11 @@ public class SaveLoadManager : MonoBehaviour
     {
         if (File.Exists(runeBagsSavePath))
         {
-            string json = File.ReadAllText(runeBagsSavePath);
+            string encryptedJson = File.ReadAllText(runeBagsSavePath);
+            string json = EncryptionUtility.Decrypt(encryptedJson);
             RuneBagsData data = JsonUtility.FromJson<RuneBagsData>(json);
-
             runeInventory.runeBag = data.runeBag;
             runeInventory.equippedRuneBag = data.equippedRuneBag;
-            //Debug.Log("Rune bags loaded from " + runeBagsSavePath);
         }
         else
         {
@@ -110,7 +116,6 @@ public class SaveLoadManager : MonoBehaviour
 
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(equippedWeaponSavePath, json);
-        //Debug.Log("Equipped weapon saved to " + equippedWeaponSavePath);
     }
 
     public WeaponData LoadEquippedWeapon()
@@ -119,12 +124,11 @@ public class SaveLoadManager : MonoBehaviour
         {
             string json = File.ReadAllText(equippedWeaponSavePath);
             EquippedWeaponData data = JsonUtility.FromJson<EquippedWeaponData>(json);
-            Debug.Log("Equipped weapon loaded from " + equippedWeaponSavePath);
             return data.equippedWeapon;
         }
         else
         {
-            Debug.LogWarning("Equipped weapon save file not found at " + equippedWeaponSavePath);
+            Debug.LogWarning("Equipped weapon save file not found.");
             return null;
         }
     }
@@ -138,7 +142,6 @@ public class SaveLoadManager : MonoBehaviour
 
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(toggleStateSavePath, json);
-        //Debug.Log("Toggle state saved to " + toggleStateSavePath);
     }
 
     public bool LoadToggleState()
@@ -147,13 +150,43 @@ public class SaveLoadManager : MonoBehaviour
         {
             string json = File.ReadAllText(toggleStateSavePath);
             ToggleStateData data = JsonUtility.FromJson<ToggleStateData>(json);
-            //Debug.Log("Toggle state loaded from " + toggleStateSavePath);
             return data.isOn;
         }
         else
         {
-            Debug.LogWarning("Toggle state save file not found at " + toggleStateSavePath);
+            Debug.LogWarning("Toggle state save file not found.");
             return false;
+        }
+    }
+
+    public void SavePotionInventory(PotionInventory potionInventory)
+    {
+        PotionBagSerializable data = new PotionBagSerializable
+        {
+            potions = potionInventory.potionBag.potions, // Already storing potion names
+            equippedPotion = potionInventory.equippedPotion?.potionName
+        };
+
+        string json = JsonUtility.ToJson(data, true);
+        File.WriteAllText(potionBagSavePath, json);
+
+        Debug.Log("Potion inventory saved: " + json);
+    }
+
+    public PotionBagSerializable LoadPotionInventory()
+    {
+        if (File.Exists(potionBagSavePath))
+        {
+            string json = File.ReadAllText(potionBagSavePath);
+            PotionBagSerializable data = JsonUtility.FromJson<PotionBagSerializable>(json);
+
+            Debug.Log("Potion inventory loaded: " + json);
+            return data;
+        }
+        else
+        {
+            Debug.LogWarning("Potion inventory save file not found.");
+            return null;
         }
     }
 
@@ -175,13 +208,37 @@ public class SaveLoadManager : MonoBehaviour
         PassiveUpgrades passiveUpgrades = FindObjectOfType<PassiveUpgrades>();
         if (passiveUpgrades != null)
         {
-            var (upgrades, oneOffItems, gameSceneLoaded) = LoadUpgrades();  // Assign to local variables
+            var (upgrades, oneOffItems, gameSceneLoaded) = LoadUpgrades();
             passiveUpgrades.purchasedUpgrades = upgrades;
             passiveUpgrades.purchasedOneOffItems = oneOffItems;
-            passiveUpgrades.SetGameSceneLoaded(gameSceneLoaded); // Assuming you have a method to set this value
+            passiveUpgrades.SetGameSceneLoaded(gameSceneLoaded);
+        }
+
+        PotionInventory potionInventory = FindObjectOfType<PotionInventory>();
+        if (potionInventory != null)
+        {
+            PotionBagSerializable loadedData = LoadPotionInventory(); // Load the serialized data
+
+            // Convert potion names back to PotionData objects
+            potionInventory.potionBag.potions = loadedData.potions
+                .Select(potionName => potionInventory.allPotions.Find(p => p.potionName == potionName))
+                .Where(potion => potion != null) // Ensure only valid potions are added
+                .Select(potion => potion.potionName) // Convert back to a list of names (string)
+                .ToList();
+
+            // Convert the equipped potion name back to a PotionData object
+            potionInventory.equippedPotion = potionInventory.allPotions
+                .Find(p => p.potionName == loadedData.equippedPotion);
+
+            if (potionInventory.equippedPotion == null && !string.IsNullOrEmpty(loadedData.equippedPotion))
+            {
+                Debug.LogWarning($"Equipped potion '{loadedData.equippedPotion}' not found in allPotions.");
+            }
+
+            potionInventory.UpdateEquippedPotionDisplay();
         }
     }
-    
+
     private void OnSceneUnloaded(Scene scene)
     {
         RuneInventory runeInventory = FindObjectOfType<RuneInventory>();
@@ -193,7 +250,13 @@ public class SaveLoadManager : MonoBehaviour
         PassiveUpgrades passiveUpgrades = FindObjectOfType<PassiveUpgrades>();
         if (passiveUpgrades != null)
         {
-            SaveUpgrades(passiveUpgrades.purchasedUpgrades, passiveUpgrades.purchasedOneOffItems, passiveUpgrades.IsGameSceneLoaded()); // Pass the gameSceneLoaded value
+            SaveUpgrades(passiveUpgrades.purchasedUpgrades, passiveUpgrades.purchasedOneOffItems, passiveUpgrades.IsGameSceneLoaded());
+        }
+
+        PotionInventory potionInventory = FindObjectOfType<PotionInventory>();
+        if (potionInventory != null)
+        {
+            SavePotionInventory(potionInventory);
         }
     }
 
@@ -222,6 +285,18 @@ public class SaveLoadManager : MonoBehaviour
             File.Delete(passiveUpgradesSavePath);
             Debug.Log("Passive upgrades save file deleted.");
         }
+
+        if (File.Exists(potionBagSavePath))
+        {
+            File.Delete(potionBagSavePath);
+            Debug.Log("Potion inventory save file deleted.");
+        }
+
+        if (File.Exists(equippedPotionSavePath))
+        {
+            File.Delete(equippedPotionSavePath);
+            Debug.Log("Equipped potion save file deleted.");
+        }
     }
 
     [System.Serializable]
@@ -249,5 +324,12 @@ public class SaveLoadManager : MonoBehaviour
         public List<PassiveUpgrades.Upgrade> upgrades;
         public List<PassiveUpgrades.OneOffItem> oneOffItems;
         public bool gameSceneLoaded;
+    }
+
+    [System.Serializable]
+    public class PotionBagData
+    {
+        public List<PotionData> potions = new List<PotionData>();
+        public PotionData equippedPotion; // Changed to single PotionData
     }
 }

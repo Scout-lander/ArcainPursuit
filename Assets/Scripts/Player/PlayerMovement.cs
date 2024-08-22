@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : Sortable
 {
     public const float DEFAULT_MOVESPEED = 5f;
 
@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] public TrailRenderer tr;
 
-    void Start()
+    protected override void Start()
     {
         player = GetComponent<PlayerStats>();
         coolDowns = FindObjectOfType<CoolDowns>();

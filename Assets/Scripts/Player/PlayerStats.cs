@@ -42,7 +42,6 @@ public class PlayerStats : MonoBehaviour
         [Range(0, 1.5f)] public float dashDuration;
         public float dashCooldown, maxDashes;
         [Range(0, 2)] public float StunReduction, BurnReduction, SlowReduction;
-        public float heartRune;
 
         public static Stats operator +(Stats s1, Stats s2)
         {
@@ -54,7 +53,7 @@ public class PlayerStats : MonoBehaviour
             s1.area += s2.area;
             s1.speed += s2.speed;
             s1.duration += s2.duration;
-            s1.amount += (int)s2.amount; // Explicit cast to int
+            s1.amount += (int)s2.amount;
             s1.cooldown += s2.cooldown;
             s1.luck += s2.luck;
             s1.growth += s2.growth;
@@ -67,7 +66,32 @@ public class PlayerStats : MonoBehaviour
             s1.StunReduction += s2.StunReduction;
             s1.SlowReduction += s2.SlowReduction;
             s1.BurnReduction += s2.BurnReduction;
-            s1.heartRune += s2.heartRune;
+            return s1;
+        }
+
+        public static Stats operator -(Stats s1, Stats s2)
+        {
+            s1.maxHealth -= s2.maxHealth;
+            s1.recovery -= s2.recovery;
+            s1.armor -= s2.armor;
+            s1.moveSpeed -= s2.moveSpeed;
+            s1.might -= s2.might;
+            s1.area -= s2.area;
+            s1.speed -= s2.speed;
+            s1.duration -= s2.duration;
+            s1.amount -= s2.amount;
+            s1.cooldown -= s2.cooldown;
+            s1.luck -= s2.luck;
+            s1.growth -= s2.growth;
+            s1.greed -= s2.greed;
+            s1.curse -= s2.curse;
+            s1.magnet -= s2.magnet;
+            s1.dashDuration -= s2.dashDuration;
+            s1.maxDashes -= s2.maxDashes;
+            s1.dashCooldown -= s2.dashCooldown;
+            s1.StunReduction -= s2.StunReduction;
+            s1.SlowReduction -= s2.SlowReduction;
+            s1.BurnReduction -= s2.BurnReduction;
             return s1;
         }
     }
@@ -79,7 +103,6 @@ public class PlayerStats : MonoBehaviour
         luck = 1, greed = 1, growth = 1, curse = 1,
         dashDuration = 1.2f, dashCooldown = 5, maxDashes = 1,
         StunReduction = 1, SlowReduction = 1, BurnReduction = 1,
-        heartRune = 0
     };
 
     [SerializeField] public Stats actualStats;
@@ -146,6 +169,7 @@ public class PlayerStats : MonoBehaviour
     public int passiveItemIndex;
     public bool isBurning = false;
     public bool isPoisoned = false;
+    private bool potionActive = false;
 
     [Header("UI")]
     public Image healthBar;
@@ -246,22 +270,30 @@ public class PlayerStats : MonoBehaviour
         }
 
         // Apply upgrades from PassiveUpgrades
-    PassiveUpgrades passiveUpgrades = GetComponent<PassiveUpgrades>();
-    if (passiveUpgrades != null)
-    {
-        foreach (var upgrade in passiveUpgrades.purchasedUpgrades)
+        PassiveUpgrades passiveUpgrades = GetComponent<PassiveUpgrades>();
+        if (passiveUpgrades != null)
         {
-            actualStats += upgrade.statBoost;
+            foreach (var upgrade in passiveUpgrades.purchasedUpgrades)
+            {
+                actualStats += upgrade.statBoost;
+            }
+            
+            foreach (var oneOffItem in passiveUpgrades.purchasedOneOffItems)
+            {
+                actualStats += oneOffItem.statBoost;
+            }
         }
-        
-        foreach (var oneOffItem in passiveUpgrades.purchasedOneOffItems)
-        {
-            actualStats += oneOffItem.statBoost;
-        }
-    }
 
         // Apply gem effects
         ApplyEquippedRuneEffects();
+
+        // Apply active potion effects, if any
+        PotionInventory potionInventory = GetComponent<PotionInventory>();
+        if (potionInventory != null && potionInventory.equippedPotion != null && potionActive)
+        {
+            // Apply the equipped potion's stats if it is active
+            actualStats += potionInventory.equippedPotion.statBuffs;
+        }
 
         // Update collector radius
         collector.SetRadius(actualStats.magnet);
@@ -271,6 +303,8 @@ public class PlayerStats : MonoBehaviour
         {
             CurrentHealth = actualStats.maxHealth;
         }
+
+        Debug.Log("Recalculated stats: " + actualStats);
     }
 
     public void IncreaseExperience(int amount)
@@ -330,12 +364,7 @@ public class PlayerStats : MonoBehaviour
                 {
                     // Absorb damage with heartRune
                     rune.actualStats.heartRune -= dmg;
-                    if (rune.actualStats.heartRune <= 0)
-                    {
-                        // Remove the rune if heartRune is depleted
-                        rune.actualStats.heartRune = 0;
-                        RemoveDamageAbsorbingRune(rune);
-                    }
+                    
                     damageAbsorbed = true;
                     break; // Exit the loop after absorbing damage
                 }
@@ -518,31 +547,64 @@ public class PlayerStats : MonoBehaviour
             //actualStats.StunReduction += rune.actualStats.StunReduction;
             //actualStats.BurnReduction += rune.actualStats.BurnReduction;
             //actualStats.SlowReduction += rune.actualStats.SlowReduction;
-            if (rune.actualStats.heartRune > 0 && rune.takesDamage)
-            {
-                actualStats.heartRune += rune.actualStats.heartRune;
-            }
 
             actualStats.moveSpeed = Mathf.Max(actualStats.moveSpeed, 0.01f);
             actualStats.maxHealth = Mathf.Max(actualStats.maxHealth, 1f);
         }
     }
-
-    private Rune GetEquippedDamageAbsorbingRune()
+    
+    public void ApplyBuff(Stats statBoost)
     {
-        foreach (Rune rune in runeInventory.equippedRuneBag.runes)
-        {
-            if (rune.actualStats.heartRune > 0 && rune.takesDamage)
-            {
-                return rune;
-            }
-        }
-        return null;
+        actualStats += statBoost;
+        RecalculateStats();
     }
 
-    // Method to remove the damage-absorbing rune from the inventory
-    private void RemoveDamageAbsorbingRune(Rune rune)
+    // Method to apply potion effects
+    public void ApplyPotionEffect(PotionData potionData)
     {
-        runeInventory.equippedRuneBag.runes.Remove(rune);
+        // Heal the player first
+        RestoreHealth(potionData.healthRestoration);
+        potionActive = true;
+        
+        // Apply the potion's buffs
+        ApplyBuff(potionData.statBuffs);
+        Debug.Log("Applying potion effect: " + potionData.potionName);
+
+        GameObject effectInstance = null;
+        if (potionData.effectPrefab != null)
+        {
+            Debug.Log("Applying effect Prefab");
+            effectInstance = Instantiate(potionData.effectPrefab, transform.position, Quaternion.identity, transform);
+        }
+
+        // Handle the potion's duration if applicable
+        if (potionData.duration > 0)
+        {
+            StartCoroutine(HandlePotionDuration(potionData.duration, potionData.statBuffs, effectInstance));
+        }
+    }
+
+    private IEnumerator HandlePotionDuration(float duration, Stats statBuffs, GameObject effectInstance)
+    {
+        // Wait for the potion's duration
+        yield return new WaitForSeconds(duration);
+        potionActive = false;
+
+        // Remove the potion's effects after the duration
+        RemovePotionBuff(statBuffs);
+
+        // Destroy the effect instance after the duration ends
+        if (effectInstance != null)
+        {
+            Destroy(effectInstance);
+        }
+    }
+
+
+    public void RemovePotionBuff(Stats statBuffs)
+    {
+        // Subtract the potion's effects
+        actualStats -= statBuffs;
+        RecalculateStats(); // Recalculate stats to ensure integrity
     }
 }

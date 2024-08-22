@@ -5,7 +5,8 @@ public class ScreenManager : MonoBehaviour
     public GameObject weaponsScreen;
     public GameObject runesScreen;
     public GameObject settingsScreen;
-
+    public GameObject potionScreen;
+    public GameObject shopScreen;
     public GameObject currentScreen;
 
     void Start()
@@ -14,6 +15,8 @@ public class ScreenManager : MonoBehaviour
         if (weaponsScreen != null) weaponsScreen.SetActive(false);
         if (runesScreen != null) runesScreen.SetActive(false);
         if (settingsScreen != null) settingsScreen.SetActive(false);
+        if (potionScreen != null) potionScreen.SetActive(false);
+        if (shopScreen != null) shopScreen.SetActive(false);
     }
 
     void Update()
@@ -21,6 +24,22 @@ public class ScreenManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             HandleEscapeKey();
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            OpenPotionScreen();
+        }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            OpenShopScreen();
+        }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            OpenRunesScreen();
+        }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            OpenWeaponsScreen();
         }
     }
 
@@ -73,6 +92,18 @@ public class ScreenManager : MonoBehaviour
     public void OpenSettingsScreen()
     {
         OpenScreen(settingsScreen);
+        Time.timeScale = 0;
+    }
+
+    public void OpenPotionScreen()
+    {
+        OpenScreen(potionScreen);
+        Time.timeScale = 0;
+    }
+
+    public void OpenShopScreen()
+    {
+        OpenScreen(shopScreen);
         Time.timeScale = 0;
     }
 }
