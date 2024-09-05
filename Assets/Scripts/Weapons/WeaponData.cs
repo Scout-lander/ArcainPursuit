@@ -1,10 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// Replacement for the WeaponScriptableObject class. The idea is we want to store all weapon evolution
-/// data in one single object, instead of having multiple objects to store a single weapon, which is
-/// what we would have had to do if we continued using WeaponScriptableObject.
-/// </summary>
 [CreateAssetMenu(fileName = "Weapon Data", menuName = "2D Top-down Rogue-like/Weapon Data")]
 public class WeaponData : ItemData
 {
@@ -12,6 +7,7 @@ public class WeaponData : ItemData
     public Weapon.Stats baseStats;
     public Weapon.Stats[] linearGrowth;
     public Weapon.Stats[] randomGrowth;
+    public WeaponBuff[] buffs; // Add a list of buffs to the weapon data
 
     // Gives us the stat growth / description of the next level.
     public override Skill.LevelData GetLevelData(int level)
@@ -27,8 +23,7 @@ public class WeaponData : ItemData
             return randomGrowth[Random.Range(0, randomGrowth.Length)];
 
         // Return an empty value and a warning.
-        Debug.LogWarning(string.Format("Weapon doesn't have its level up stats configured for Level {0}!",level));
+        Debug.LogWarning(string.Format("Weapon doesn't have its level up stats configured for Level {0}!", level));
         return new Weapon.Stats();
     }
-
 }

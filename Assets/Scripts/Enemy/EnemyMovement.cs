@@ -11,6 +11,9 @@ public class EnemyMovement : Sortable
     protected Vector2 knockbackVelocity;
     protected float knockbackDuration;
 
+    private bool isMovementStopped = false; // Flag to stop enemy movement
+    private float stopMovementTimer = 0f;
+
     public enum OutOfFrameAction { none, respawnAtEdge, despawn }
     public OutOfFrameAction outOfFrameAction = OutOfFrameAction.respawnAtEdge;
 
@@ -35,13 +38,23 @@ public class EnemyMovement : Sortable
 
     protected virtual void Update()
     {
+        // Handle the stop movement timer
+        if (stopMovementTimer > 0)
+        {
+            stopMovementTimer -= Time.deltaTime;
+            if (stopMovementTimer <= 0)
+            {
+                isMovementStopped = false; // Resume movement after timer ends
+            }
+        }
+
         // If we are currently being knocked back, then process the knockback.
         if(knockbackDuration > 0)
         {
             transform.position += (Vector3)knockbackVelocity * Time.deltaTime;
             knockbackDuration -= Time.deltaTime;
         }
-        else
+        else if (!isMovementStopped)
         {
             // Constantly move the enemy towards the player.
             Move();
@@ -71,6 +84,13 @@ public class EnemyMovement : Sortable
             }
             else spawnedOutOfFrame = false;
         }
+    }
+
+    // This method stops the enemy's movement for a set duration
+    public void StopMovement(float duration)
+    {
+        isMovementStopped = true;
+        stopMovementTimer = duration;
     }
 
     // This is meant to be called from other scripts to create knockback.

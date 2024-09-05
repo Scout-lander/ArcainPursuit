@@ -250,9 +250,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseStats:
-    maxHealth: 30
+    maxHealth: 300
     moveSpeed: 1.5
-    damage: 3
+    damage: 30
     knockbackMultiplier: 0.5
     resistances:
       freeze: 0
@@ -271,6 +271,7 @@ MonoBehaviour:
       debuff: 0
     curseBoosts: 0
     levelBoosts: 0
+  attackEffects: []
   enemyAbility: {fileID: 0}
   damageBlockPercentage: 0
   hasShield: 0

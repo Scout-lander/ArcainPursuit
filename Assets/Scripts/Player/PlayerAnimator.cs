@@ -10,6 +10,10 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField]
     private GameObject otherObjectToFlip;
 
+    // Animator triggers for death animations
+    private readonly string[] deathAnimations = { "DeathBack", "DeathFront" };
+
+
     void Start()
     {
         am = GetComponentInChildren<Animator>();
@@ -51,5 +55,15 @@ public class PlayerAnimator : MonoBehaviour
                 otherObjectToFlip.transform.localScale = new Vector3(Mathf.Abs(otherObjectToFlip.transform.localScale.x), otherObjectToFlip.transform.localScale.y, otherObjectToFlip.transform.localScale.z);
             }
         }
+    }
+
+    // Method to trigger a random death animation
+    public void PlayDeathAnimation()
+    {
+        // Choose a random index between 0 and 1
+        int randomIndex = Random.Range(0, deathAnimations.Length);
+
+        // Set the corresponding death trigger
+        am.SetTrigger(deathAnimations[randomIndex]);
     }
 }

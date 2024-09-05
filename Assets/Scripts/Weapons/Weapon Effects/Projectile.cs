@@ -13,7 +13,7 @@ public class Projectile : WeaponEffect
     public Vector3 rotationSpeed = new Vector3(0, 0, 0);
 
     protected Rigidbody2D rb;
-    protected int piercing;
+    protected float piercing;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -98,15 +98,24 @@ public class Projectile : WeaponEffect
             // Deals damage and destroys the projectile.
             es.TakeDamage(GetDamage(), source);
 
+            // Get the weapon's stats.
             Weapon.Stats stats = weapon.GetStats();
+            weapon.ApplyBuffs(es);
+
+            // Reduce the piercing value.
             piercing--;
+
+            // Instantiate the hit effect if it exists.
             if (stats.hitEffect)
             {
                 Destroy(Instantiate(stats.hitEffect, transform.position, Quaternion.identity), 5f);
             }
+
+            //Debug.Log($"Hit Enemy: New Piercing Value = {piercing}");
         }
         else if (p)
         {
+            // Handles breakable props similarly to enemies.
             p.TakeDamage(GetDamage());
             piercing--;
 
@@ -115,9 +124,40 @@ public class Projectile : WeaponEffect
             {
                 Destroy(Instantiate(stats.hitEffect, transform.position, Quaternion.identity), 5f);
             }
+
+            //Debug.Log($"Hit Breakable: New Piercing Value = {piercing}");
         }
 
-        // Destroy this object if it has run out of health from hitting other stuff.
-        if (piercing <= 0) Destroy(gameObject);
+        // Handle fractional piercing chance to pierce the next target.
+        if (piercing > 0 && piercing < 1)
+        {
+            // Calculate the chance to continue piercing based on the remaining piercing value.
+            float chanceToPierce = piercing;
+
+            // Log the chance to pierce and the random value.
+            float randomValue = Random.value;
+            //Debug.Log($"Fractional Piercing Check: chanceToPierce = {chanceToPierce}, Random.value = {randomValue}");
+
+            // Check if the projectile should continue based on the fractional value.
+            if (randomValue <= chanceToPierce)
+            {
+                // Decrement piercing further if it succeeds in piercing with a fractional value.
+                piercing = 0.0001f;
+                //Debug.Log($"Projectile pierced with fractional value: New Piercing Value = {piercing}");
+            }
+            else
+            {
+                //Debug.Log("Projectile destroyed due to fractional piercing chance.");
+                Destroy(gameObject);
+                return; // Ensure to exit to avoid further logic execution.
+            }
+        }
+
+        // Destroy this object if it has run out of piercing.
+        if (piercing <= 0)
+        {
+            //Debug.Log("Projectile destroyed due to no remaining piercing.");
+            Destroy(gameObject);
+        }
     }
 }

@@ -59,6 +59,6 @@ public class SettingsMenu : MonoBehaviour
     public void GoToMegapackScreen()
     {
         // Change to the Megapack scene
-        SceneManager.LoadScene("Megapack"); // Ensure "Megapack" is the correct name of your Megapack scene
+        SceneManager.LoadScene("Creator"); // Ensure "Megapack" is the correct name of your Megapack scene
     }
 }

@@ -462,7 +462,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8354af90658fa984495e7be309fc3bc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sortingActive: 1
+  minimumDistance: 0.2
   outOfFrameAction: 1
+  knockbackVariance: 2
 --- !u!114 &8733775121529283211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -495,17 +498,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a7f8ef098f9c46c1bf597f50232c655, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyAbility: {fileID: 0}
   baseStats:
-    maxHealth: 100
+    maxHealth: 1000
     moveSpeed: 5
-    damage: 14
+    damage: 140
     knockbackMultiplier: 1
+    resistances:
+      freeze: 0
+      kill: 0
+      debuff: 0
+    curseBoosts: 3
+    levelBoosts: 0
   actualStats:
     maxHealth: 10
     moveSpeed: 1.5
     damage: 3
     knockbackMultiplier: 1
+    resistances:
+      freeze: 0
+      kill: 0
+      debuff: 0
+    curseBoosts: 0
+    levelBoosts: 0
+  attackEffects: []
+  enemyAbility: {fileID: 0}
   damageBlockPercentage: 0
   hasShield: 0
   goldAmount: 10
@@ -524,7 +540,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cd68dc3ee90f4830a53ae774de9fae6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meteorPrefab: {fileID: 8136418681314248422, guid: 2e4653682c7505c4daa21e562954c039, type: 3}
+  meteorPrefab: {fileID: 1727626132299242, guid: 7057af01b44be6b4080c16f652eab71c, type: 3}
   minionPrefab: {fileID: 5783190142156780217, guid: 3dd062fd9dd15e44bb28fb13517103e3, type: 3}
   minionSpawnPoints:
   - {fileID: 5599225645464233020}
@@ -536,7 +552,7 @@ MonoBehaviour:
   - {fileID: 1719413602342627574}
   - {fileID: 8044248367160537044}
   minionSpawnParticles: {fileID: 108142839588649679, guid: ccedbd443abc5e84a9384d54b4765806, type: 3}
-  teleportParticlesPrefab: {fileID: 2708598583397607910, guid: 6398d43fe79ea0140913dc5530c646af, type: 3}
+  teleportParticlesPrefab: {fileID: 19800000, guid: 01512df8c69dc9446a5fbf6fa15cafc8, type: 3}
   baseStats:
     meteorShowerCooldown: 8
     minMeteorCount: 5
@@ -546,7 +562,7 @@ MonoBehaviour:
     maxMinionsToSpawn: 5
     teleportCooldown: 4
     whirlwindRadius: 3
-    whirlwindDamage: 1
+    whirlwindDamage: 10
     whirlwindDuration: 3
     whirlwindCooldown: 3
     whirlwindMoveSpeedMultiplier: 0.8
@@ -575,6 +591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd05d3c4b4b6cd2468c9bfee78f2f797, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boostedByCurse: 1
   generalAbilityChance: 100
   lightningAbilityChance: 0
   burningAbilityChance: 30

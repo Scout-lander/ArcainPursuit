@@ -11,7 +11,7 @@ public class PlayerMovement : Sortable
     public float lastHorizontalVector { get; private set; }
     public float lastVerticalVector { get; private set; }
     public Vector2 lastMovedVector { get; private set; }
-    private bool movementLocked = false;
+    public bool movementLocked = false;
 
     // Dashing
     public bool isDashing { get; private set; }

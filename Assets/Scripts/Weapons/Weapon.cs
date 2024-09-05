@@ -11,16 +11,19 @@ public abstract class Weapon : Skill
     [System.Serializable]
     public class Stats : LevelData
     {
+ 
         [Header("Visuals")]
         public Projectile projectilePrefab; // If attached, a projectile will spawn every time the weapon cools down.
         public Aura auraPrefab; // If attached, an aura will spawn when weapon is equipped.
-        public ParticleSystem hitEffect;
+        public ParticleSystem hitEffect, procEffect;
         public Rect spawnVariance;
 
         [Header("Values")]
         public float lifespan; // If 0, it will last forever.
-        public float damage, damageVariance, area, speed, cooldown, projectileInterval, knockback;
-        public int number, piercing, maxInstances;
+        public float damage, damageVariance, area, speed, cooldown, projectileInterval, knockback, piercing;
+        public int number, maxInstances;
+
+        public EntityStats.BuffInfo[] appliedBuffs;
 
         // Allows us to use the + operator to add 2 Stats together.
         // Very important later when we want to increase our weapon stats.
@@ -32,6 +35,7 @@ public abstract class Weapon : Skill
             result.projectilePrefab = s2.projectilePrefab ?? s1.projectilePrefab;
             result.auraPrefab = s2.auraPrefab ?? s1.auraPrefab;
             result.hitEffect = s2.hitEffect == null ? s1.hitEffect : s2.hitEffect;
+            result.procEffect = s2.procEffect == null ? s1.procEffect : s2.procEffect;
             result.spawnVariance = s2.spawnVariance;
             result.lifespan = s1.lifespan + s2.lifespan;
             result.damage = s1.damage + s2.damage;
@@ -43,6 +47,7 @@ public abstract class Weapon : Skill
             result.piercing = s1.piercing + s2.piercing;
             result.projectileInterval = s1.projectileInterval + s2.projectileInterval;
             result.knockback = s1.knockback + s2.knockback;
+            result.appliedBuffs = s2.appliedBuffs == null || s2.appliedBuffs.Length <= 0 ? s1.appliedBuffs : s2.appliedBuffs;
             return result;
         }
 
@@ -60,14 +65,8 @@ public abstract class Weapon : Skill
 
     public float damageTotal;
     public float WeaponDPS;
-    public float WeaponTime; // Time when the weapon was collected
-    //protected int currentLevel = 1; // Current level of the weapon, initialized to 1
+    public float WeaponTime;
 
-    // Public property to get the weapon's level
-    public int Level
-    {
-        get { return currentLevel; }
-    }
 
     // For dynamically created weapons, call initialise to set everything up.
     public virtual void Initialise(WeaponData data)
@@ -82,6 +81,11 @@ public abstract class Weapon : Skill
         StartCoroutine(UpdateWeaponDPS());
     }
 
+    public int Level
+    {
+        get { return currentLevel; }
+    }
+
     protected virtual void Update()
     {
         currentCooldown -= Time.deltaTime;
@@ -91,7 +95,6 @@ public abstract class Weapon : Skill
         }
     }
 
-    // Coroutine to update WeaponDPS every second
     private IEnumerator UpdateWeaponDPS()
     {
         while (true)
@@ -117,15 +120,12 @@ public abstract class Weapon : Skill
         return true;
     }
 
-    // Lets us check whether this weapon can attack at this current moment.
     public virtual bool CanAttack()
     {
+        if (Mathf.Approximately(owner.ActualStats.might, 0)) return false;
         return currentCooldown <= 0;
     }
 
-    // Performs an attack with the weapon.
-    // Returns true if the attack was successful.
-    // This doesn't do anything. We have to override this at the child class to add a behaviour.
     protected virtual bool Attack(int attackCount = 1)
     {
         if (CanAttack())
@@ -174,5 +174,14 @@ public abstract class Weapon : Skill
         // multiple times.
         currentCooldown = Mathf.Min(actualCooldown, currentCooldown + actualCooldown);
         return true;
+    }
+
+    // Makes the weapon apply its buff to a targeted EntityStats object.
+    // Makes the weapon apply its buff to a targeted EntityStats object.
+    public void ApplyBuffs(EntityStats e)
+    {
+        // Apply all assigned buffs to the target.
+        foreach (EntityStats.BuffInfo b in GetStats().appliedBuffs)
+            e.ApplyBuff(b, owner.ActualStats.duration);
     }
 }

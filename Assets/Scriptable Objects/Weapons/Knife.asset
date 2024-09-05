@@ -41,6 +41,7 @@ MonoBehaviour:
     projectilePrefab: {fileID: 8272151355606925140, guid: 6baa1f016461c0241b581b8ee9b0b964, type: 3}
     auraPrefab: {fileID: 0}
     hitEffect: {fileID: 0}
+    procEffect: {fileID: 0}
     spawnVariance:
       serializedVersion: 2
       x: 0
@@ -55,15 +56,17 @@ MonoBehaviour:
     cooldown: 1
     projectileInterval: 0.1
     knockback: 0.5
-    number: 1
     piercing: 1
+    number: 1
     maxInstances: 70
+    appliedBuffs: []
   linearGrowth:
   - name: Level 2
     description: Fires one more projectile.
     projectilePrefab: {fileID: 0}
     auraPrefab: {fileID: 0}
     hitEffect: {fileID: 0}
+    procEffect: {fileID: 0}
     spawnVariance:
       serializedVersion: 2
       x: 0
@@ -78,14 +81,16 @@ MonoBehaviour:
     cooldown: 0
     projectileInterval: 0
     knockback: 0
-    number: 1
     piercing: 0
+    number: 1
     maxInstances: 0
+    appliedBuffs: []
   - name: Level 3
     description: Fires one more projectile. Base damage up by 5.
     projectilePrefab: {fileID: 0}
     auraPrefab: {fileID: 0}
     hitEffect: {fileID: 0}
+    procEffect: {fileID: 0}
     spawnVariance:
       serializedVersion: 2
       x: 0
@@ -100,14 +105,16 @@ MonoBehaviour:
     cooldown: 0
     projectileInterval: 0
     knockback: 0
-    number: 1
     piercing: 0
+    number: 1
     maxInstances: 0
+    appliedBuffs: []
   - name: Level 4
     description: Fires one more projectile.
     projectilePrefab: {fileID: 0}
     auraPrefab: {fileID: 0}
     hitEffect: {fileID: 0}
+    procEffect: {fileID: 0}
     spawnVariance:
       serializedVersion: 2
       x: 0
@@ -122,14 +129,16 @@ MonoBehaviour:
     cooldown: 0
     projectileInterval: 0
     knockback: 0
-    number: 1
     piercing: 0
+    number: 1
     maxInstances: 0
+    appliedBuffs: []
   - name: Level 5
     description: Passes through one more enemy.
     projectilePrefab: {fileID: 0}
     auraPrefab: {fileID: 0}
     hitEffect: {fileID: 0}
+    procEffect: {fileID: 0}
     spawnVariance:
       serializedVersion: 2
       x: 0
@@ -144,14 +153,16 @@ MonoBehaviour:
     cooldown: 0
     projectileInterval: 0
     knockback: 0
-    number: 0
     piercing: 1
+    number: 0
     maxInstances: 0
+    appliedBuffs: []
   - name: Level 6
     description: Fires one more projectile.
     projectilePrefab: {fileID: 0}
     auraPrefab: {fileID: 0}
     hitEffect: {fileID: 0}
+    procEffect: {fileID: 0}
     spawnVariance:
       serializedVersion: 2
       x: 0
@@ -166,14 +177,16 @@ MonoBehaviour:
     cooldown: 0
     projectileInterval: 0
     knockback: 0
-    number: 1
     piercing: 0
+    number: 1
     maxInstances: 0
+    appliedBuffs: []
   - name: Level 7
     description: Passes through one more enemy.
     projectilePrefab: {fileID: 0}
     auraPrefab: {fileID: 0}
     hitEffect: {fileID: 0}
+    procEffect: {fileID: 0}
     spawnVariance:
       serializedVersion: 2
       x: 0
@@ -188,14 +201,16 @@ MonoBehaviour:
     cooldown: 0
     projectileInterval: 0
     knockback: 0
-    number: 1
     piercing: 0
+    number: 1
     maxInstances: 0
+    appliedBuffs: []
   - name: Level 8
     description: Passes through one more enemy.
     projectilePrefab: {fileID: 0}
     auraPrefab: {fileID: 0}
     hitEffect: {fileID: 0}
+    procEffect: {fileID: 0}
     spawnVariance:
       serializedVersion: 2
       x: 0
@@ -210,7 +225,8 @@ MonoBehaviour:
     cooldown: 0
     projectileInterval: 0
     knockback: 0
-    number: 1
     piercing: 0
+    number: 1
     maxInstances: 0
+    appliedBuffs: []
   randomGrowth: []

@@ -30,10 +30,10 @@ MonoBehaviour:
       level: 1
   baseStats:
     name: Ring of Regen
-    description: Character recovers 0.2 HP per second.
+    description: Character recovers 2 HP per second.
     boosts:
       maxHealth: 0
-      recovery: 0.2
+      recovery: 2
       armor: 0
       moveSpeed: 0
       might: 0
@@ -56,10 +56,10 @@ MonoBehaviour:
       SlowReduction: 0
   growth:
   - name: Ring of Regen Level 2
-    description: Health recovery increases by 0.2 HP per second.
+    description: Health recovery increases by 2 HP per second.
     boosts:
       maxHealth: 0
-      recovery: 0.2
+      recovery: 2
       armor: 0
       moveSpeed: 0
       might: 0
@@ -81,10 +81,10 @@ MonoBehaviour:
       BurnReduction: 0
       SlowReduction: 0
   - name: Ring of Regen Level 3
-    description: Health recovery increases by 0.2 HP per second.
+    description: Health recovery increases by 2 HP per second.
     boosts:
       maxHealth: 0
-      recovery: 0.2
+      recovery: 2
       armor: 0
       moveSpeed: 0
       might: 0
@@ -106,10 +106,10 @@ MonoBehaviour:
       BurnReduction: 0
       SlowReduction: 0
   - name: Ring of Regen Level 4
-    description: Health recovery increases by 0.2 HP per second.
+    description: Health recovery increases by 4 HP per second.
     boosts:
       maxHealth: 0
-      recovery: 0.2
+      recovery: 4
       armor: 0
       moveSpeed: 0
       might: 0
@@ -131,10 +131,10 @@ MonoBehaviour:
       BurnReduction: 0
       SlowReduction: 0
   - name: Ring of Regen Level 5
-    description: Health recovery increases by 0.2 HP per second.
+    description: Health recovery increases by 5 HP per second.
     boosts:
       maxHealth: 0
-      recovery: 0.2
+      recovery: 5
       armor: 0
       moveSpeed: 0
       might: 0

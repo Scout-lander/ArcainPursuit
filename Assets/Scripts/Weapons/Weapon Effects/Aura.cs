@@ -35,6 +35,8 @@ public class Aura : WeaponEffect
                     Weapon.Stats stats = weapon.GetStats();
                     affectedTargets[pair.Key] = stats.cooldown * Owner.ActualStats.cooldown;
                     pair.Key.TakeDamage(GetDamage(), transform.position, stats.knockback);
+
+                    weapon.ApplyBuffs(pair.Key); // Apply all assigned buffs to the target.
                 }
             }
         }

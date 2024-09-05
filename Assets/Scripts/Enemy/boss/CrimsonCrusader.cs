@@ -208,7 +208,7 @@ public class CrimsonCrusader : MonoBehaviour
 
             // Modify the moveSpeed during whirlwind
             float modifiedMoveSpeed = originalMoveSpeed * actualStats.whirlwindMoveSpeedMultiplier;
-            enemyStats.Actual.moveSpeed = modifiedMoveSpeed;
+            enemyStats.actualStats.moveSpeed = modifiedMoveSpeed;
 
             StartCoroutine(ActivateWhirlwind());
             StartCoroutine(StopWhirlwindAfterDuration(actualStats.whirlwindDuration));
@@ -220,7 +220,7 @@ public class CrimsonCrusader : MonoBehaviour
         yield return new WaitForSeconds(duration);
 
         // Restore the original moveSpeed
-        enemyStats.Actual.moveSpeed = originalMoveSpeed + .2f;
+        enemyStats.actualStats.moveSpeed = originalMoveSpeed + .2f;
 
         isWhirlwindActive = false;
         hasUsedWhirlwind = true;

@@ -27028,6 +27028,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sortingActive: 1
   minimumDistance: 0.2
+  movementLocked: 0
   stunParticles: {fileID: 0}
   coolDowns: {fileID: 0}
   tr: {fileID: 0}
@@ -27097,6 +27098,12 @@ MonoBehaviour:
   icon: {fileID: 1030338504, guid: b864b88c23ee2144b87d4b4d50da2383, type: 3}
   name: Wizzard
   startingWeapon: {fileID: 0}
+  baseStatsComponent:
+    strength: 5
+    intelligence: 5
+    dexterity: 5
+    vitality: 5
+    willpower: 5
   baseStats:
     maxHealth: 100
     recovery: 0
@@ -27147,6 +27154,10 @@ MonoBehaviour:
   blockedEffect: {fileID: 6415545557987951955, guid: 3ca9be94e77455144a0282a314eaff6a, type: 3}
   fireEffect: {fileID: 5381768852406240756, guid: d2725825d79809c44bb377a6bace2c54, type: 3}
   hurtUI: {fileID: 0}
+  revivalPrefab: {fileID: 0}
+  revivalPrefabOffset: {x: 0, y: 2, z: 0}
+  knockbackForce: 10
+  knockbackRange: 5
   DefaultMaterial: {fileID: 2100000, guid: 0034ad73028649741834431dbd23f209, type: 2}
   FireMaterial: {fileID: 2100000, guid: 553ebce113c398941a96ca06138e2bf9, type: 2}
   StunMaterial: {fileID: 2100000, guid: 48b16e89faec95a41a4d1553c09fe3c0, type: 2}
@@ -27169,14 +27180,13 @@ MonoBehaviour:
   - startLevel: 41
     endLevel: 999
     experienceCapIncrease: 2400
-  weaponIndex: 0
-  passiveItemIndex: 0
   isBurning: 0
   isPoisoned: 0
   healthBar: {fileID: 0}
   expBar: {fileID: 0}
   levelText: {fileID: 0}
   runeInventory: {fileID: 0}
+  Controller: {fileID: 0}
 --- !u!114 &1308608983965208220
 MonoBehaviour:
   m_ObjectHideFlags: 0

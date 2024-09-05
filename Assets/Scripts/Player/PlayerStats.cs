@@ -6,7 +6,7 @@ using TMPro;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class PlayerStats : MonoBehaviour
+public class PlayerStats : EntityStats
 {
     [SerializeField]
     private Sprite icon;
@@ -27,6 +27,10 @@ public class PlayerStats : MonoBehaviour
             EquipStartingWeapon(); // Equip the new starting weapon
         } 
     }
+
+    [SerializeField]
+    private BaseStats baseStatsComponent; // Reference to the BaseStats script
+
 
     [System.Serializable]
     public struct Stats
@@ -94,6 +98,25 @@ public class PlayerStats : MonoBehaviour
             s1.BurnReduction -= s2.BurnReduction;
             return s1;
         }
+        public static Stats operator *(Stats s1, Stats s2)
+        {
+            s1.maxHealth *= s2.maxHealth;
+            s1.recovery *= s2.recovery;
+            s1.armor *= s2.armor;
+            s1.moveSpeed *= s2.moveSpeed;
+            s1.might *= s2.might;
+            s1.area *= s2.area;
+            s1.speed *= s2.speed;
+            s1.duration *= s2.duration;
+            s1.amount *= s2.amount;
+            s1.cooldown *= s2.cooldown;
+            s1.luck *= s2.luck;
+            s1.growth *= s2.growth;
+            s1.greed *= s2.greed;
+            s1.curse *= s2.curse;
+            s1.magnet *= s2.magnet;
+            return s1;
+        }
     }
 
     public Stats baseStats = new Stats
@@ -112,7 +135,7 @@ public class PlayerStats : MonoBehaviour
         set { actualStats = value; }
     }
 
-    private float health;
+    //private float health;
     public float CurrentHealth
     {
         get { return health; }
@@ -133,6 +156,12 @@ public class PlayerStats : MonoBehaviour
     public GameObject fireEffect;
     public HurtUI hurtUI;
 
+    [Header("Revival Settings")]
+    [SerializeField] private GameObject revivalPrefab; // Prefab to play when reviving
+    [SerializeField] private Vector3 revivalPrefabOffset = new Vector3(0, 2, 0); // Offset to place the prefab above the player
+    [SerializeField] private float knockbackForce = 10f; // Force of the knockback effect
+    [SerializeField] private float knockbackRange = 5f; // Range of the knockback effect
+
     [Header("Materials")]
     public Material DefaultMaterial;
     public Material FireMaterial;
@@ -142,6 +171,7 @@ public class PlayerStats : MonoBehaviour
 
     private Renderer playerRenderer;
     private PlayerMovement playerMovement;
+    private PlayerAnimator playerAnimator; // Reference to PlayerAnimator
 
     [Header("Experience/Level")]
     public int experience = 0;
@@ -165,8 +195,8 @@ public class PlayerStats : MonoBehaviour
 
     private PlayerInventory inventory;
     private PlayerCollector collector;
-    public int weaponIndex;
-    public int passiveItemIndex;
+    
+    private bool hasRevived = false; // Tracks if the player has been revived once
     public bool isBurning = false;
     public bool isPoisoned = false;
     private bool potionActive = false;
@@ -177,6 +207,7 @@ public class PlayerStats : MonoBehaviour
     public TMP_Text levelText;
     public RuneInventory runeInventory; // Reference to the RuneInventory
     private SaveLoadManager saveLoadManager;
+    public CharacterController Controller;
 
     void Awake()
     {
@@ -184,6 +215,7 @@ public class PlayerStats : MonoBehaviour
         collector = GetComponentInChildren<PlayerCollector>();
         playerRenderer = GetComponent<Renderer>();
         playerMovement = GetComponent<PlayerMovement>();
+        playerAnimator = GetComponent<PlayerAnimator>(); // Initialize PlayerAnimator
         saveLoadManager = FindObjectOfType<SaveLoadManager>();
 
         // Initialize actualStats with baseStats
@@ -194,6 +226,9 @@ public class PlayerStats : MonoBehaviour
         // Initialize health with the calculated max health including rune and gem effects
         health = actualStats.maxHealth;
 
+        // Reset the revived status at the start of the game
+        hasRevived = false;
+
         // Initialize runeInventory if not assigned
         if (runeInventory == null)
         {
@@ -201,8 +236,10 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
+
         if (SceneManager.GetActiveScene().name == "Base") // Replace "BaseSceneName" with the actual name of your base scene
         {
             UpdateHealthBar();
@@ -223,6 +260,12 @@ public class PlayerStats : MonoBehaviour
             EquipStartingWeapon();
         }
 
+        // Apply base stats from BaseStats component
+        if (baseStatsComponent != null)
+        {
+            baseStatsComponent.ApplyToStats(ref actualStats);
+        }
+
         ApplyEquippedRuneEffects();
 
         experienceCap = levelRanges[0].experienceCapIncrease;
@@ -236,7 +279,7 @@ public class PlayerStats : MonoBehaviour
         UpdateLevelText();
     }
 
-    void Update()
+    protected override void Update()
     {
         HandleInvincibility();
         Recover();
@@ -254,10 +297,16 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    public void RecalculateStats()
+    public override  void RecalculateStats()
     {
         // Start with base stats
         actualStats = baseStats;
+
+        // Apply base stats from the BaseStats component
+        if (baseStatsComponent != null)
+        {
+            baseStatsComponent.ApplyToStats(ref actualStats);
+        }
 
         // Apply equipped passive item boosts
         foreach (PlayerInventory.Slot s in inventory.passiveSlots)
@@ -303,8 +352,34 @@ public class PlayerStats : MonoBehaviour
         {
             CurrentHealth = actualStats.maxHealth;
         }
+        Stats multiplier = new Stats
+        {
+            maxHealth = 1f, moveSpeed = 1f, might = 1f, amount = 1,
+            area = 1f, speed = 1f, duration = 1f, cooldown = 1f, luck = 1f,
+            greed = 1f, growth = 1f, curse = 1f
+        };
+        foreach (Buff b in activeBuffs)
+        {
+            BuffData.Stats bd = b.GetData();
+            switch (bd.modifierType)
+            {
+                case BuffData.ModifierType.additive:
+                    actualStats += bd.playerModifier;
+                    break;
+                case BuffData.ModifierType.multiplicative:
+                    multiplier *= bd.playerModifier;
+                    break;
+            }
+        }
+        actualStats *= multiplier;
 
         Debug.Log("Recalculated stats: " + actualStats);
+
+        // We have to account for the buffs from EntityStats as well.
+        foreach(Buff b in activeBuffs)
+        {
+            actualStats += b.GetData().playerModifier;
+        }
     }
 
     public void IncreaseExperience(int amount)
@@ -351,7 +426,7 @@ public class PlayerStats : MonoBehaviour
         levelText.text = level.ToString();
     }
 
-    public void TakeDamage(float dmg)
+    public override void TakeDamage(float dmg)
     {
         if (!isInvincible)
         {
@@ -404,8 +479,68 @@ public class PlayerStats : MonoBehaviour
         healthBar.fillAmount = CurrentHealth / actualStats.maxHealth;
     }
 
-    public void Kill()
+    public override void Kill()
     {
+        // Check if the player has the revival stat and hasn't been revived yet
+        if (actualStats.revival > 0 && !hasRevived)
+        {
+            // Set hasRevived to true to ensure only one revival per game
+            hasRevived = true;
+
+            // Reduce the revival count
+            actualStats.revival--;
+
+            // Freeze time to stop enemies and the player from moving or attacking
+            //Time.timeScale = 0f;
+
+            // Restore the player's health to full
+            CurrentHealth = actualStats.maxHealth;
+
+            // Reset any status effects, like burning or poison
+            isBurning = false;
+            isPoisoned = false;
+
+            // Optional: Reset the player's position or apply any visual effects for revival
+            //transform.position = Vector3.zero; // Or any specific safe position
+
+            // Show visual feedback for revival (e.g., particle effects, sound)
+            Debug.Log("Player revived! Revival used.");
+
+            // Start coroutine to handle the revival process and resume time
+            playerMovement.movementLocked = true; 
+
+            StartCoroutine(RevivePlayer());
+            if (playerAnimator != null)
+            {
+                playerAnimator.PlayDeathAnimation(); // Trigger the death animation
+            }
+
+            // Exit the method to avoid calling the GameOver method
+            return;
+
+        }
+
+        if (playerAnimator != null)
+        {
+            playerAnimator.PlayDeathAnimation(); // Trigger the death animation
+        }
+
+        if (!GameManager.instance.isGameOver)
+        {
+            GameManager.instance.AssignLevelReachedUI(level);
+            GameManager.instance.GameOver();
+        }
+
+    }
+    private IEnumerator KillEnd()
+    {
+        if (playerAnimator != null)
+        {
+            playerAnimator.PlayDeathAnimation(); // Trigger the death animation
+        }
+
+        yield return new WaitForSecondsRealtime(2f);
+
         if (!GameManager.instance.isGameOver)
         {
             GameManager.instance.AssignLevelReachedUI(level);
@@ -413,7 +548,66 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    public void RestoreHealth(float amount)
+    private IEnumerator RevivePlayer()
+    {
+        // Instantiate the revival prefab at the player's position, if assigned
+        if (revivalPrefab != null)
+        {
+            Vector3 prefabPosition = transform.position + revivalPrefabOffset; // Position the prefab above the player
+            Instantiate(revivalPrefab, prefabPosition, Quaternion.identity);
+        }
+
+        // Apply knockback to all enemies within range
+        ApplyKnockbackToEnemies();
+
+        // Wait for a short duration to give the revival effect time (e.g., 2 seconds)
+        yield return new WaitForSecondsRealtime(1f);
+
+        // Resume time after the revival process
+        //Time.timeScale = 1f;
+
+        // Allow the player to continue playing
+        playerMovement.movementLocked = false;
+    }
+    private void ApplyKnockbackToEnemies()
+    {
+        // Find all colliders within the knockback range
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, knockbackRange);
+
+        foreach (Collider2D collider in hitColliders)
+        {
+            // Check if the collider belongs to an enemy with the EnemyMovement component
+            EnemyMovement enemyMovement = collider.GetComponent<EnemyMovement>();
+            if (enemyMovement != null)
+            {
+                // Calculate the direction from the player to the enemy
+                Vector2 direction = (collider.transform.position - transform.position).normalized;
+                
+                // Calculate the knockback velocity using the knockback force
+                Vector2 knockbackVelocity = direction * knockbackForce;
+
+                // Apply knockback to the enemy using the Knockback method
+                enemyMovement.Knockback(knockbackVelocity, 0.5f); // Adjust duration as needed
+            }
+        }
+        
+        // Stop movement for all enemies
+        StopAllEnemiesMovement(1f); // Adjust the duration as needed
+    }
+
+    private void StopAllEnemiesMovement(float duration)
+    {
+        // Find all active enemies in the scene
+        EnemyMovement[] allEnemies = FindObjectsOfType<EnemyMovement>();
+
+        // Stop movement for each enemy
+        foreach (EnemyMovement enemy in allEnemies)
+        {
+            enemy.StopMovement(duration);
+        }
+    }
+
+    public override void RestoreHealth(float amount)
     {
         CurrentHealth = Mathf.Clamp(CurrentHealth + amount, 0, actualStats.maxHealth);
     }

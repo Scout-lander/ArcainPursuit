@@ -21,6 +21,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: b0dc500a22ec474489a3c7eb21ff8c04
   - enabled: 1
-    path: Assets/Scenes/Megapack.unity
+    path: Assets/Scenes/Creator.unity
     guid: 44e64b29e7a9ff540a198446fc05c595
   m_configObjects: {}

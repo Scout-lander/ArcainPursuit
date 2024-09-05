@@ -35,6 +35,7 @@ MonoBehaviour:
     projectilePrefab: {fileID: 1108755234690347847, guid: 54aa80cea8abc8840a0f4e0b3d45d4dd, type: 3}
     auraPrefab: {fileID: 0}
     hitEffect: {fileID: 0}
+    procEffect: {fileID: 0}
     spawnVariance:
       serializedVersion: 2
       x: 0
@@ -42,22 +43,24 @@ MonoBehaviour:
       width: 0
       height: 0
     lifespan: 5
-    damage: 6.5
-    damageVariance: 2
+    damage: 65
+    damageVariance: 7
     area: 1
     speed: 10
     cooldown: 1
     projectileInterval: 0.1
     knockback: 0.5
+    piercing: 2.8
     number: 1
-    piercing: 1
     maxInstances: 70
+    appliedBuffs: []
   linearGrowth:
   - name: Broken Bottle Level 2
     description: Fires one more projectile.
     projectilePrefab: {fileID: 0}
     auraPrefab: {fileID: 0}
     hitEffect: {fileID: 0}
+    procEffect: {fileID: 0}
     spawnVariance:
       serializedVersion: 2
       x: 0
@@ -72,14 +75,16 @@ MonoBehaviour:
     cooldown: 0
     projectileInterval: 0
     knockback: 0
-    number: 1
     piercing: 0
+    number: 1
     maxInstances: 0
+    appliedBuffs: []
   - name: Broken Bottle Level 3
-    description: Fires one more projectile. Base damage up by 5.
+    description: Fires one more projectile. Base damage up by 15
     projectilePrefab: {fileID: 0}
     auraPrefab: {fileID: 0}
     hitEffect: {fileID: 0}
+    procEffect: {fileID: 0}
     spawnVariance:
       serializedVersion: 2
       x: 0
@@ -87,21 +92,23 @@ MonoBehaviour:
       width: 0
       height: 0.4
     lifespan: 0
-    damage: 5
+    damage: 15
     damageVariance: 0
     area: 0
     speed: 0
     cooldown: 0
     projectileInterval: 0
     knockback: 0
-    number: 1
     piercing: 0
+    number: 1
     maxInstances: 0
+    appliedBuffs: []
   - name: Broken Bottle Level 4
     description: Fires one more projectile.
     projectilePrefab: {fileID: 0}
     auraPrefab: {fileID: 0}
     hitEffect: {fileID: 0}
+    procEffect: {fileID: 0}
     spawnVariance:
       serializedVersion: 2
       x: 0
@@ -116,14 +123,16 @@ MonoBehaviour:
     cooldown: 0
     projectileInterval: 0
     knockback: 0
-    number: 1
     piercing: 0
+    number: 1
     maxInstances: 0
+    appliedBuffs: []
   - name: Broken Bottle Level 5
     description: Passes through one more enemy.
     projectilePrefab: {fileID: 0}
     auraPrefab: {fileID: 0}
     hitEffect: {fileID: 0}
+    procEffect: {fileID: 0}
     spawnVariance:
       serializedVersion: 2
       x: 0
@@ -138,14 +147,16 @@ MonoBehaviour:
     cooldown: 0
     projectileInterval: 0
     knockback: 0
-    number: 0
     piercing: 1
+    number: 0
     maxInstances: 0
+    appliedBuffs: []
   - name: Broken Bottle Level 6
     description: Fires one more projectile.
     projectilePrefab: {fileID: 0}
     auraPrefab: {fileID: 0}
     hitEffect: {fileID: 0}
+    procEffect: {fileID: 0}
     spawnVariance:
       serializedVersion: 2
       x: 0
@@ -160,14 +171,16 @@ MonoBehaviour:
     cooldown: 0
     projectileInterval: 0
     knockback: 0
-    number: 1
     piercing: 0
+    number: 1
     maxInstances: 0
+    appliedBuffs: []
   - name: Broken Bottle Level 7
     description: Passes through one more enemy.
     projectilePrefab: {fileID: 0}
     auraPrefab: {fileID: 0}
     hitEffect: {fileID: 0}
+    procEffect: {fileID: 0}
     spawnVariance:
       serializedVersion: 2
       x: 0
@@ -182,14 +195,16 @@ MonoBehaviour:
     cooldown: 0
     projectileInterval: 0
     knockback: 0
-    number: 1
     piercing: 0
+    number: 1
     maxInstances: 0
+    appliedBuffs: []
   - name: Broken Bottle Level 8
     description: Passes through one more enemy.
     projectilePrefab: {fileID: 0}
     auraPrefab: {fileID: 0}
     hitEffect: {fileID: 0}
+    procEffect: {fileID: 0}
     spawnVariance:
       serializedVersion: 2
       x: 0
@@ -204,7 +219,10 @@ MonoBehaviour:
     cooldown: 0
     projectileInterval: 0
     knockback: 0
-    number: 1
     piercing: 0
+    number: 1
     maxInstances: 0
+    appliedBuffs: []
   randomGrowth: []
+  buffs:
+  - {fileID: 11400000, guid: 8ac351374a001a54e90324d10210f0ca, type: 2}
