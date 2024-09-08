@@ -32,14 +32,14 @@ MonoBehaviour:
       y: 0
       width: 0
       height: 0
-    lifespan: 10
-    damage: 150
+    lifespan: 6
+    damage: 140
     damageVariance: 15
     area: 1
-    speed: 3
-    cooldown: 3
-    projectileInterval: 0.02
-    knockback: 1
+    speed: 2
+    cooldown: 4
+    projectileInterval: 0.05
+    knockback: 0
     piercing: 1
     number: 3
     maxInstances: 30

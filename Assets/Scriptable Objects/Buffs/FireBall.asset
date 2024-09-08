@@ -21,7 +21,7 @@ MonoBehaviour:
     tint: {r: 1, g: 0, b: 0, a: 0}
     animationSpeed: 1
     duration: 3
-    damagePerSecond: 1
+    damagePerSecondRange: {x: 15, y: 20}
     healPerSecond: 0
     tickInterval: 1
     stackType: 0

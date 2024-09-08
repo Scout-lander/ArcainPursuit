@@ -608,7 +608,7 @@ PlayerSettings:
   scriptingDefineSymbols:
     Android: STEAMWORKS_NET
     Standalone: STEAMWORKS_NET
-    WebGL: 
+    WebGL: STEAMWORKS_NET
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}

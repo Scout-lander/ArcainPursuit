@@ -33,7 +33,10 @@ public class BuffData : ScriptableObject
 
         [Header("Stats")]
         public float duration;
-        public float damagePerSecond, healPerSecond;
+
+        [Tooltip("The range of damage per second this buff applies.")]
+        public Vector2 damagePerSecondRange = new Vector2(1f, 2f);
+        public float healPerSecond;
 
         [Tooltip("Controls how frequently the damage / heal per second applies.")]
         public float tickInterval = 0.25f;
@@ -55,9 +58,17 @@ public class BuffData : ScriptableObject
         public Stats()
         {
             duration = 10f; 
-            damagePerSecond = 1f;
+            damagePerSecondRange = new Vector2(1f, 2f);
             healPerSecond = 1f;
             tickInterval = 0.25f;
+        }
+
+        /// <summary>
+        /// Returns a random damage per second value within the specified range.
+        /// </summary>
+        public float GetRandomDamagePerSecond()
+        {
+            return Random.Range(damagePerSecondRange.x, damagePerSecondRange.y);
         }
     }
 
@@ -68,7 +79,7 @@ public class BuffData : ScriptableObject
     public float GetTickDamage(int variant = 0)
     {
         Stats s = Get(variant);
-        return s.damagePerSecond * s.tickInterval;
+        return s.GetRandomDamagePerSecond() * s.tickInterval;
     }
 
     public float GetTickHeal(int variant = 0)

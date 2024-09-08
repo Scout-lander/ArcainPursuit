@@ -21,11 +21,16 @@ MonoBehaviour:
     tint: {r: 0, g: 0, b: 0, a: 0.24705882}
     animationSpeed: 1
     duration: 1.3
-    damagePerSecond: 0
+    damagePerSecondRange: {x: 0, y: 0}
     healPerSecond: 0
     tickInterval: 0.25
     stackType: 1
     modifierType: 0
+    strengthModifier: 0
+    intelligenceModifier: 0
+    dexterityModifier: 0
+    vitalityModifier: 0
+    willpowerModifier: 0
     playerModifier:
       maxHealth: 0
       recovery: 0

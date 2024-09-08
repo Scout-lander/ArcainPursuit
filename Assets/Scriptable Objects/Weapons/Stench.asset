@@ -35,7 +35,7 @@ MonoBehaviour:
     description: Damages nearby enemies. Reduces resistance to knockbaand a arck
       and freeze.
     projectilePrefab: {fileID: 0}
-    auraPrefab: {fileID: 4169919635133386887, guid: ac71b6e1c02b03c40bf86e3298f3dc37, type: 3}
+    auraPrefab: {fileID: -9153856289388903239, guid: 31f478508b9548c4e9a8a72b2ee0eb53, type: 3}
     hitEffect: {fileID: 0}
     procEffect: {fileID: 0}
     spawnVariance:
@@ -47,13 +47,13 @@ MonoBehaviour:
     lifespan: 0
     damage: 50
     damageVariance: 7
-    area: 1.5
+    area: 0.9
     speed: 0
     cooldown: 1.3
     projectileInterval: 0
     knockback: 1
-    number: 1
     piercing: 0
+    number: 1
     maxInstances: 50
     appliedBuffs:
     - data: {fileID: 11400000, guid: c82c0ff6568262b48809b9f1157a815c, type: 2}
@@ -80,8 +80,8 @@ MonoBehaviour:
     cooldown: 0
     projectileInterval: 0
     knockback: 0
-    number: 0
     piercing: 0
+    number: 0
     maxInstances: 0
     appliedBuffs: []
   - name: Stench Level 3
@@ -104,8 +104,8 @@ MonoBehaviour:
     cooldown: -0.1
     projectileInterval: 0
     knockback: 0
-    number: 0
     piercing: 0
+    number: 0
     maxInstances: 0
     appliedBuffs: []
   - name: Stench Level 4
@@ -128,8 +128,8 @@ MonoBehaviour:
     cooldown: 0
     projectileInterval: 0
     knockback: 0
-    number: 0
     piercing: 0
+    number: 0
     maxInstances: 0
     appliedBuffs: []
   - name: Stench Level 5
@@ -152,8 +152,8 @@ MonoBehaviour:
     cooldown: -0.1
     projectileInterval: 0
     knockback: 0
-    number: 0
     piercing: 0
+    number: 0
     maxInstances: 0
     appliedBuffs: []
   - name: Stench Level 6
@@ -176,8 +176,8 @@ MonoBehaviour:
     cooldown: 0
     projectileInterval: 0
     knockback: 0
-    number: 0
     piercing: 0
+    number: 0
     maxInstances: 0
     appliedBuffs: []
   - name: Stench Level 7
@@ -200,8 +200,8 @@ MonoBehaviour:
     cooldown: -0.1
     projectileInterval: 0
     knockback: 0
-    number: 0
     piercing: 0
+    number: 0
     maxInstances: 0
     appliedBuffs: []
   - name: Stench Level 8
@@ -224,8 +224,9 @@ MonoBehaviour:
     cooldown: 0
     projectileInterval: 0
     knockback: 0
-    number: 0
     piercing: 0
+    number: 0
     maxInstances: 0
     appliedBuffs: []
   randomGrowth: []
+  buffs: []

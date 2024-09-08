@@ -40,8 +40,8 @@ MonoBehaviour:
     cooldown: 5
     projectileInterval: 0.05
     knockback: 1
-    number: 2
     piercing: 100
+    number: 2
     maxInstances: 0
     appliedBuffs: []
   linearGrowth:
@@ -65,8 +65,8 @@ MonoBehaviour:
     cooldown: 0
     projectileInterval: 0
     knockback: 0
-    number: 1
     piercing: 0
+    number: 1
     maxInstances: 0
     appliedBuffs: []
   - name: Level 3
@@ -89,8 +89,8 @@ MonoBehaviour:
     cooldown: 0
     projectileInterval: 0
     knockback: 0
-    number: 0
     piercing: 0
+    number: 0
     maxInstances: 0
     appliedBuffs: []
   - name: Level 4
@@ -113,8 +113,8 @@ MonoBehaviour:
     cooldown: 0
     projectileInterval: 0
     knockback: 0
-    number: 1
     piercing: 0
+    number: 1
     maxInstances: 0
     appliedBuffs: []
   - name: Level 5
@@ -137,8 +137,8 @@ MonoBehaviour:
     cooldown: 0
     projectileInterval: 0
     knockback: 0
-    number: 1
     piercing: 0
+    number: 1
     maxInstances: 0
     appliedBuffs: []
   - name: Level 6
@@ -161,8 +161,8 @@ MonoBehaviour:
     cooldown: 0
     projectileInterval: 0
     knockback: 0
-    number: 1
     piercing: 0
+    number: 1
     maxInstances: 0
     appliedBuffs: []
   - name: Level 7
@@ -185,8 +185,8 @@ MonoBehaviour:
     cooldown: 0
     projectileInterval: 0
     knockback: 0
-    number: 1
     piercing: 0
+    number: 1
     maxInstances: 0
     appliedBuffs: []
   - name: Level 8
@@ -209,8 +209,9 @@ MonoBehaviour:
     cooldown: 0
     projectileInterval: 0
     knockback: 0
-    number: 1
     piercing: 0
+    number: 1
     maxInstances: 0
     appliedBuffs: []
   randomGrowth: []
+  buffs: []
