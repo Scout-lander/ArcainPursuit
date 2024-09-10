@@ -37,10 +37,6 @@ public class ScreenManager : MonoBehaviour
         {
             OpenRunesScreen();
         }
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            OpenWeaponsScreen();
-        }
     }
 
     public void OpenScreen(GameObject screen)

@@ -35,6 +35,8 @@ public class SaveLoadManager : MonoBehaviour
 
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.sceneUnloaded += OnSceneUnloaded;
+
+        Time.timeScale = 1f;
     }
 
     private void OnDestroy()

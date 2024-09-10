@@ -35,7 +35,7 @@ MonoBehaviour:
     dashCooldown: 0
     armor: 0
     heartRune: 0
-    lifeRegen: 0.1
+    lifeRegen: 1
     might: 0
     moveSpeed: 0
   commonMaximumPossible:
@@ -47,7 +47,7 @@ MonoBehaviour:
     dashCooldown: 0
     armor: 0
     heartRune: 0
-    lifeRegen: 0.4
+    lifeRegen: 4
     might: 0
     moveSpeed: 0
   uncommonMinimumPossible:
@@ -59,7 +59,7 @@ MonoBehaviour:
     dashCooldown: 0
     armor: 0
     heartRune: 0
-    lifeRegen: 0.4
+    lifeRegen: 4
     might: 0
     moveSpeed: 0
   uncommonMaximumPossible:
@@ -71,7 +71,7 @@ MonoBehaviour:
     dashCooldown: 0
     armor: 0
     heartRune: 0
-    lifeRegen: 0.6
+    lifeRegen: 6
     might: 0
     moveSpeed: 0
   rareMinimumPossible:
@@ -83,7 +83,7 @@ MonoBehaviour:
     dashCooldown: 0
     armor: 0
     heartRune: 0
-    lifeRegen: 0.6
+    lifeRegen: 6
     might: 0
     moveSpeed: 0
   rareMaximumPossible:
@@ -95,7 +95,7 @@ MonoBehaviour:
     dashCooldown: 0
     armor: 0
     heartRune: 0
-    lifeRegen: 0.7
+    lifeRegen: 7
     might: 0
     moveSpeed: 0
   epicMinimumPossible:
@@ -107,7 +107,7 @@ MonoBehaviour:
     dashCooldown: 0
     armor: 0
     heartRune: 0
-    lifeRegen: 0.7
+    lifeRegen: 7
     might: 0
     moveSpeed: 0
   epicMaximumPossible:
@@ -119,7 +119,7 @@ MonoBehaviour:
     dashCooldown: 0
     armor: 0
     heartRune: 0
-    lifeRegen: 0.8
+    lifeRegen: 8
     might: 0
     moveSpeed: 0
   legendaryMinimumPossible:
@@ -131,7 +131,7 @@ MonoBehaviour:
     dashCooldown: 0
     armor: 0
     heartRune: 0
-    lifeRegen: 0.9
+    lifeRegen: 9
     might: 0
     moveSpeed: 0
   legendaryMaximumPossible:

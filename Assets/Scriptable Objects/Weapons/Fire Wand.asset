@@ -36,7 +36,7 @@ MonoBehaviour:
     damage: 140
     damageVariance: 15
     area: 1
-    speed: 2
+    speed: 2.5
     cooldown: 4
     projectileInterval: 0.05
     knockback: 0

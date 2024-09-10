@@ -33,7 +33,7 @@ MonoBehaviour:
     curse: 0
     dashCount: 0
     dashCooldown: 0
-    armor: 0.01
+    armor: 1
     heartRune: 0
     lifeRegen: 0
     might: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
     curse: 0
     dashCount: 0
     dashCooldown: 0
-    armor: 0.03
+    armor: 3
     heartRune: 0
     lifeRegen: 0
     might: 0
@@ -57,7 +57,7 @@ MonoBehaviour:
     curse: 0
     dashCount: 0
     dashCooldown: 0
-    armor: 0.03
+    armor: 3
     heartRune: 0
     lifeRegen: 0
     might: 0
@@ -69,7 +69,7 @@ MonoBehaviour:
     curse: 0
     dashCount: 0
     dashCooldown: 0
-    armor: 0.05
+    armor: 5
     heartRune: 0
     lifeRegen: 0
     might: 0
@@ -81,7 +81,7 @@ MonoBehaviour:
     curse: 0
     dashCount: 0
     dashCooldown: 0
-    armor: 0.05
+    armor: 5
     heartRune: 0
     lifeRegen: 0
     might: 0
@@ -93,7 +93,7 @@ MonoBehaviour:
     curse: 0
     dashCount: 0
     dashCooldown: 0
-    armor: 0.1
+    armor: 10
     heartRune: 0
     lifeRegen: 0
     might: 0
@@ -105,7 +105,7 @@ MonoBehaviour:
     curse: 0
     dashCount: 0
     dashCooldown: 0
-    armor: 0.1
+    armor: 10
     heartRune: 0
     lifeRegen: 0
     might: 0
@@ -117,7 +117,7 @@ MonoBehaviour:
     curse: 0
     dashCount: 0
     dashCooldown: 0
-    armor: 0.13
+    armor: 13
     heartRune: 0
     lifeRegen: 0
     might: 0
@@ -129,7 +129,7 @@ MonoBehaviour:
     curse: 0
     dashCount: 0
     dashCooldown: 0
-    armor: 0.13
+    armor: 13
     heartRune: 0
     lifeRegen: 0
     might: 0
@@ -141,7 +141,7 @@ MonoBehaviour:
     curse: 0
     dashCount: 0
     dashCooldown: 0
-    armor: 0.15
+    armor: 15
     heartRune: 0
     lifeRegen: 0
     might: 0
@@ -153,7 +153,7 @@ MonoBehaviour:
     curse: 0
     dashCount: 0
     dashCooldown: 0
-    armor: 0.5
+    armor: 20
     heartRune: 0
     lifeRegen: 0
     might: 0
@@ -165,7 +165,7 @@ MonoBehaviour:
     curse: 0
     dashCount: 0
     dashCooldown: 0
-    armor: 0.6
+    armor: 30
     heartRune: 0
     lifeRegen: 0
     might: 0
